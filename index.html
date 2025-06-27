@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مرجكز الفارس للعناية بالرجل - أفضل صالون حلاقة في السعودية</title>
-    <meta name="description" content="صالون الحلاقة الملكي يقدم أفضل خدمات الحلاقة والعناية بالشعر واللحية بأيدي خبراء محترفين">
+    <title>مركز الفارس للعناية بالرجل - أفضل صالون حلاقة في السعودية</title>
+    <meta name="description" content="مركز الفارس للعناية بالرجل يقدم أفضل خدمات الحلاقة والعناية بالشعر واللحية بأيدي خبراء محترفين">
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -407,6 +407,67 @@ textarea {
 
 .dark-theme .mobile-theme-btn .fa-sun {
   display: block;
+}
+
+/* ===== MOBILE BOTTOM NAVIGATION ===== */
+.mobile-bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(15px);
+  border-top: 1px solid var(--border-color);
+  padding: 0.5rem 0;
+  z-index: 1000;
+  display: none;
+}
+
+.dark-theme .mobile-bottom-nav {
+  background: rgba(26, 26, 26, 0.95);
+}
+
+.mobile-nav-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.5rem;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.mobile-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.5rem;
+  text-decoration: none;
+  color: var(--text-color-light);
+  transition: var(--transition);
+  border-radius: 8px;
+  position: relative;
+}
+
+.mobile-nav-item.active {
+  color: var(--primary-color);
+  background: rgba(212, 175, 55, 0.1);
+}
+
+.mobile-nav-item:hover {
+  color: var(--primary-color);
+  background: rgba(212, 175, 55, 0.1);
+}
+
+.mobile-nav-item i {
+  font-size: 1.2rem;
+  margin-bottom: 0.25rem;
+}
+
+.mobile-nav-item span {
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-align: center;
+  line-height: 1.2;
 }
 
 /* ===== HERO SECTION ===== */
@@ -1423,6 +1484,73 @@ section {
 }
 
 /* ===== MEDIA QUERIES ===== */
+@media (max-width: 768px) {
+  .mobile-bottom-nav {
+    display: block;
+  }
+  
+  body {
+    padding-bottom: 80px;
+  }
+  
+  .hero-title {
+    font-size: 2rem;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.2rem;
+  }
+  
+  .hero-content {
+    gap: 2rem;
+  }
+  
+  .image-container {
+    width: 250px;
+    height: 250px;
+  }
+  
+  .services-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .service-card {
+    padding: 1.5rem;
+  }
+  
+  .haircuts-grid-large {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  
+  .gallery-item {
+    height: 200px;
+  }
+  
+  .about-stats {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .section-title {
+    font-size: 2rem;
+  }
+  
+  .section-subtitle {
+    font-size: 1rem;
+  }
+  
+  .back-to-top {
+    bottom: 90px;
+  }
+}
+
 @media (min-width: 576px) {
   .hero-title {
     font-size: 3rem;
@@ -1438,6 +1566,14 @@ section {
 }
 
 @media (min-width: 768px) {
+  .mobile-bottom-nav {
+    display: none;
+  }
+  
+  body {
+    padding-bottom: 0;
+  }
+  
   .hero-content {
     flex-direction: row;
     text-align: right;
@@ -1457,6 +1593,10 @@ section {
 
   .footer-content {
     grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .back-to-top {
+    bottom: 2rem;
   }
 }
 
@@ -1602,6 +1742,32 @@ section {
             <a href="#booking" class="btn btn-primary">احجز الآن</a>
         </div>
     </div>
+
+    <!-- Mobile Bottom Navigation -->
+    <nav class="mobile-bottom-nav">
+        <div class="mobile-nav-grid">
+            <a href="#home" class="mobile-nav-item active" data-section="home">
+                <i class="fas fa-home"></i>
+                <span>الرئيسية</span>
+            </a>
+            <a href="#services" class="mobile-nav-item" data-section="services">
+                <i class="fas fa-cut"></i>
+                <span>الخدمات</span>
+            </a>
+            <a href="#booking" class="mobile-nav-item" data-section="booking">
+                <i class="fas fa-calendar-plus"></i>
+                <span>احجز الآن</span>
+            </a>
+            <a href="#gallery" class="mobile-nav-item" data-section="gallery">
+                <i class="fas fa-images"></i>
+                <span>المعرض</span>
+            </a>
+            <a href="#contact" class="mobile-nav-item" data-section="contact">
+                <i class="fas fa-phone"></i>
+                <span>اتصل بنا</span>
+            </a>
+        </div>
+    </nav>
 
     <main>
         <!-- Hero Section -->
@@ -2407,6 +2573,59 @@ navLinks.forEach((link) => {
   })
 })
 
+// ==== إدارة شريط التنقل السفلي للهواتف ====
+const mobileNavItems = document.querySelectorAll('.mobile-nav-item');
+
+// تحديث الحالة النشطة لشريط التنقل السفلي
+function updateMobileNavActive() {
+  const sections = document.querySelectorAll('section');
+  const scrollPosition = window.scrollY + 100;
+
+  sections.forEach((section) => {
+    const sectionTop = section.offsetTop;
+    const sectionHeight = section.offsetHeight;
+    const sectionId = section.getAttribute('id');
+    
+    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+      // إزالة الحالة النشطة من جميع العناصر
+      mobileNavItems.forEach(item => item.classList.remove('active'));
+      
+      // إضافة الحالة النشطة للعنصر المطابق
+      const activeItem = document.querySelector(`.mobile-nav-item[data-section="${sectionId}"]`);
+      if (activeItem) {
+        activeItem.classList.add('active');
+      }
+    }
+  });
+}
+
+// إضافة مستمعي الأحداث لعناصر التنقل السفلي
+mobileNavItems.forEach((item) => {
+  item.addEventListener('click', (e) => {
+    e.preventDefault();
+    
+    // إزالة الحالة النشطة من جميع العناصر
+    mobileNavItems.forEach(navItem => navItem.classList.remove('active'));
+    
+    // إضافة الحالة النشطة للعنصر المنقور عليه
+    item.classList.add('active');
+    
+    // التمرير إلى القسم المطلوب
+    const targetId = item.getAttribute('href');
+    if (targetId && targetId.startsWith('#')) {
+      const targetSection = document.querySelector(targetId);
+      if (targetSection) {
+        const headerHeight = document.querySelector('.header').offsetHeight;
+        const targetPosition = targetSection.offsetTop - headerHeight;
+        window.scrollTo({
+          top: targetPosition,
+          behavior: 'smooth'
+        });
+      }
+    }
+  });
+});
+
 // ==== إدارة الوضع المظلم ====
 function getSystemTheme() {
   return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
@@ -2709,6 +2928,7 @@ if (contactForm) {
 // ==== إعداد الأحداث ====
 window.addEventListener("scroll", () => {
   updateActiveNavLink()
+  updateMobileNavActive()
   updateHeaderBackground()
   updateBackToTopButton()
   animateOnScroll()
@@ -2742,7 +2962,7 @@ window.addEventListener("resize", () => {
 
 // تحسين تجربة اللمس
 if ("ontouchstart" in window) {
-  const touchButtons = document.querySelectorAll(".btn, .mobile-theme-btn, .nav-link, .theme-toggle")
+  const touchButtons = document.querySelectorAll(".btn, .mobile-theme-btn, .nav-link, .theme-toggle, .mobile-nav-item")
 
   touchButtons.forEach((button) => {
     button.addEventListener("touchstart", function (e) {
@@ -2783,6 +3003,7 @@ document.addEventListener("DOMContentLoaded", () => {
   })
 
   animateOnScroll()
+  updateMobileNavActive()
 
   // الاستماع لتغييرات تفضيل النظام
   if (window.matchMedia) {
@@ -2803,6 +3024,7 @@ document.addEventListener("DOMContentLoaded", () => {
 window.addEventListener("load", () => {
   optimizePerformance()
   updateHeaderBackground()
+  updateMobileNavActive()
 })
 
 window.addEventListener("resize", () => {
@@ -2842,6 +3064,13 @@ function improveAccessibility() {
     backToTopButton.setAttribute("aria-label", "العودة لأعلى")
     backToTopButton.setAttribute("title", "العودة لأعلى")
   }
+
+  // إضافة تسميات للتنقل السفلي
+  mobileNavItems.forEach((item) => {
+    const text = item.querySelector('span').textContent;
+    item.setAttribute("aria-label", text);
+    item.setAttribute("title", text);
+  });
 }
 
 // تطبيق تحسينات إمكانية الوصول
