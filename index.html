@@ -13,17 +13,17 @@
     <style>
         /* ===== VARIABLES ===== */
 :root {
-  --primary-color: #d4af37;
-  --primary-color-dark: #b8941f;
-  --primary-color-light: #f4e18a;
-  --secondary-color: #2c3e50;
-  --accent-color: #e74c3c;
-  --text-color: #2c3e50;
-  --text-color-light: #7f8c8d;
-  --background-color: #ffffff;
-  --background-color-alt: #f8f9fa;
-  --border-color: #e9ecef;
-  --success-color: #27ae60;
+  --primary-color: #f1c40f;
+  --primary-color-dark: #f39c12;
+  --primary-color-light: #f7dc6f;
+  --secondary-color: #34495e;
+  --accent-color: #e67e22;
+  --text-color: #ecf0f1;
+  --text-color-light: #bdc3c7;
+  --background-color: #1a1a1a;
+  --background-color-alt: #2c3e50;
+  --border-color: #34495e;
+  --success-color: #2ecc71;
   --error-color: #e74c3c;
   --warning-color: #f39c12;
   --border-radius: 10px;
@@ -42,24 +42,6 @@
 .gallery-overlay i {
     color: white; /* لون الأيقونة */
     font-size: 2rem; /* حجم الأيقونة */
-}
-
-
-/* Dark Theme */
-.dark-theme {
-  --primary-color: #f1c40f;
-  --primary-color-dark: #f39c12;
-  --primary-color-light: #f7dc6f;
-  --secondary-color: #34495e;
-  --accent-color: #e67e22;
-  --text-color: #ecf0f1;
-  --text-color-light: #bdc3c7;
-  --background-color: #1a1a1a;
-  --background-color-alt: #2c3e50;
-  --border-color: #34495e;
-  --success-color: #2ecc71;
-  --error-color: #e74c3c;
-  --warning-color: #f39c12;
 }
 
 /* ===== RESET ===== */
@@ -188,14 +170,10 @@ textarea {
   left: 0;
   right: 0;
   z-index: 1000;
-  background-color: rgba(255, 255, 255, 0.95);
+  background-color: rgba(26, 26, 26, 0.95);
   backdrop-filter: blur(15px);
   box-shadow: 0 2px 25px rgba(0, 0, 0, 0.1);
   transition: var(--transition);
-}
-
-.dark-theme .header {
-  background-color: rgba(26, 26, 26, 0.95);
 }
 
 .header-content {
@@ -261,47 +239,6 @@ textarea {
   gap: 1rem;
 }
 
-.theme-toggle {
-  background: var(--background-color-alt);
-  border: 2px solid var(--border-color);
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
-  font-size: 1.2rem;
-  color: var(--text-color);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  transition: var(--transition);
-}
-
-.theme-toggle:hover {
-  transform: scale(1.1);
-  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
-  border-color: var(--primary-color);
-}
-
-.theme-toggle .fa-sun {
-  display: none;
-}
-
-.dark-theme .theme-toggle {
-  background: var(--background-color-alt);
-  border-color: var(--primary-color);
-  color: var(--primary-color);
-}
-
-.dark-theme .theme-toggle .fa-moon {
-  display: none;
-}
-
-.dark-theme .theme-toggle .fa-sun {
-  display: block;
-}
-
 .mobile-menu-toggle {
   background: none;
   border: none;
@@ -314,160 +251,6 @@ textarea {
 .mobile-menu-toggle:hover {
   color: var(--primary-color);
   transform: scale(1.1);
-}
-
-/* Mobile Menu */
-.mobile-menu {
-  display: none;
-  position: fixed;
-  top: var(--header-height);
-  left: 0;
-  right: 0;
-  background-color: var(--background-color);
-  backdrop-filter: blur(15px);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-  padding: 2rem 1.5rem;
-  z-index: 999;
-  transform: translateY(-100%);
-  transition: transform 0.3s ease, opacity 0.3s ease;
-  max-height: calc(100vh - var(--header-height));
-  overflow-y: auto;
-  opacity: 0;
-}
-
-.mobile-menu.active {
-  display: block;
-  transform: translateY(0);
-  opacity: 1;
-}
-
-.mobile-nav-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.mobile-nav-list .nav-link {
-  display: block;
-  padding: 1rem 0;
-  font-weight: 500;
-  font-size: 1.1rem;
-  border-bottom: 1px solid var(--border-color);
-}
-
-.mobile-buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  margin-top: 2rem;
-  padding-top: 2rem;
-  border-top: 1px solid var(--border-color);
-}
-
-.mobile-theme-toggle {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-}
-
-.mobile-theme-btn {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 1rem 2rem;
-  background: linear-gradient(135deg, var(--background-color-alt), var(--border-color));
-  border: 2px solid var(--border-color);
-  border-radius: var(--border-radius);
-  color: var(--text-color);
-  font-weight: 600;
-  transition: var(--transition);
-  cursor: pointer;
-  width: 100%;
-  justify-content: center;
-  font-size: 1rem;
-  position: relative;
-  overflow: hidden;
-}
-
-.mobile-theme-btn:hover {
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-color-dark));
-  color: white;
-  border-color: var(--primary-color);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
-}
-
-.mobile-theme-btn .fa-sun {
-  display: none;
-}
-
-.dark-theme .mobile-theme-btn .fa-moon {
-  display: none;
-}
-
-.dark-theme .mobile-theme-btn .fa-sun {
-  display: block;
-}
-
-/* ===== MOBILE BOTTOM NAVIGATION ===== */
-.mobile-bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(15px);
-  border-top: 1px solid var(--border-color);
-  padding: 0.5rem 0;
-  z-index: 1000;
-  display: none;
-}
-
-.dark-theme .mobile-bottom-nav {
-  background: rgba(26, 26, 26, 0.95);
-}
-
-.mobile-nav-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 0.5rem;
-  max-width: 100%;
-  margin: 0 auto;
-  padding: 0 1rem;
-}
-
-.mobile-nav-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0.5rem;
-  text-decoration: none;
-  color: var(--text-color-light);
-  transition: var(--transition);
-  border-radius: 8px;
-  position: relative;
-}
-
-.mobile-nav-item.active {
-  color: var(--primary-color);
-  background: rgba(212, 175, 55, 0.1);
-}
-
-.mobile-nav-item:hover {
-  color: var(--primary-color);
-  background: rgba(212, 175, 55, 0.1);
-}
-
-.mobile-nav-item i {
-  font-size: 1.2rem;
-  margin-bottom: 0.25rem;
-}
-
-.mobile-nav-item span {
-  font-size: 0.7rem;
-  font-weight: 500;
-  text-align: center;
-  line-height: 1.2;
 }
 
 /* ===== HERO SECTION ===== */
@@ -487,7 +270,7 @@ textarea {
   left: 0;
   right: 0;
   bottom: 0;
-  background: radial-gradient(circle at 30% 70%, rgba(212, 175, 55, 0.1) 0%, transparent 50%);
+  background: radial-gradient(circle at 30% 70%, rgba(241, 196, 15, 0.1) 0%, transparent 50%);
   pointer-events: none;
 }
 
@@ -682,7 +465,7 @@ section {
 }
 
 .service-card {
-  background-color: var(--background-color);
+  background-color: var(--background-color-alt);
   padding: 2.5rem;
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
@@ -861,105 +644,6 @@ section {
   display: inline-block;
 }
 
-/* ===== OFFERS SECTION ===== */
-.offers-section {
-  background-color: var(--background-color-alt);
-}
-
-.offers-grid-large {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-  gap: 2rem;
-}
-
-.offer-card-large {
-  background-color: var(--background-color);
-  border-radius: var(--border-radius);
-  overflow: hidden;
-  box-shadow: var(--box-shadow);
-  transition: var(--transition);
-}
-
-.offer-card-large:hover {
-  transform: translateY(-10px);
-  box-shadow: var(--box-shadow-lg);
-}
-
-.offer-image {
-  position: relative;
-  height: 200px;
-  overflow: hidden;
-}
-
-.offer-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.offer-badge {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: var(--border-radius-sm);
-  font-size: 0.8rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.offer-details {
-  padding: 2rem;
-}
-
-.offer-details h3 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  color: var(--text-color);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-.offer-details p {
-  color: var(--text-color-light);
-  margin-bottom: 1.5rem;
-  line-height: 1.6;
-}
-
-.offer-discount {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--primary-color);
-  margin-bottom: 1rem;
-}
-
-.offer-price {
-  margin-bottom: 1rem;
-}
-
-.new-price {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--primary-color);
-  margin-left: 0.5rem;
-}
-
-.old-price {
-  font-size: 1.2rem;
-  color: var(--text-color-light);
-  text-decoration: line-through;
-}
-
-.offer-expiry {
-  font-size: 0.9rem;
-  color: var(--text-color-light);
-  font-style: italic;
-}
-
 /* ===== GALLERY SECTION ===== */
 .gallery-section {
   background-color: var(--background-color);
@@ -1056,7 +740,7 @@ section {
 .stat-item {
   text-align: center;
   padding: 1.5rem;
-  background-color: var(--background-color);
+  background-color: var(--background-color-alt);
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
   transition: var(--transition);
@@ -1104,7 +788,7 @@ section {
 }
 
 .card {
-  background-color: var(--background-color);
+  background-color: var(--background-color-alt);
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
   overflow: hidden;
@@ -1445,6 +1129,56 @@ section {
   box-shadow: var(--box-shadow-lg);
 }
 
+/* ===== MOBILE BOTTOM NAVIGATION ===== */
+.mobile-bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(26, 26, 26, 0.95);
+  backdrop-filter: blur(15px);
+  border-top: 1px solid var(--border-color);
+  padding: 0.5rem 0;
+  z-index: 1000;
+  display: none;
+}
+
+.mobile-nav-items {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.mobile-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.5rem;
+  color: var(--text-color-light);
+  transition: var(--transition);
+  text-decoration: none;
+  min-width: 60px;
+}
+
+.mobile-nav-item.active,
+.mobile-nav-item:hover {
+  color: var(--primary-color);
+  transform: translateY(-2px);
+}
+
+.mobile-nav-item i {
+  font-size: 1.2rem;
+  margin-bottom: 0.25rem;
+}
+
+.mobile-nav-item span {
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-align: center;
+}
+
 /* ===== ANIMATIONS ===== */
 @keyframes fadeInUp {
   from {
@@ -1489,20 +1223,20 @@ section {
     display: block;
   }
   
-  body {
-    padding-bottom: 80px;
+  .back-to-top {
+    bottom: 5rem;
   }
   
   .hero-title {
     font-size: 2rem;
   }
   
-  .hero-subtitle {
-    font-size: 1.2rem;
+  .section-title {
+    font-size: 2rem;
   }
   
   .hero-content {
-    gap: 2rem;
+    padding: 1rem 0;
   }
   
   .image-container {
@@ -1519,18 +1253,9 @@ section {
     padding: 1.5rem;
   }
   
-  .haircuts-grid-large {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-  }
-  
   .gallery-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
-  }
-  
-  .gallery-item {
-    height: 200px;
   }
   
   .about-stats {
@@ -1538,16 +1263,24 @@ section {
     gap: 1rem;
   }
   
-  .section-title {
-    font-size: 2rem;
+  .form-row {
+    grid-template-columns: 1fr;
   }
   
-  .section-subtitle {
-    font-size: 1rem;
+  .contact-container {
+    grid-template-columns: 1fr;
   }
   
-  .back-to-top {
-    bottom: 90px;
+  .footer-content {
+    grid-template-columns: 1fr;
+  }
+  
+  section {
+    padding: 3rem 0;
+  }
+  
+  .container {
+    padding: 0 1rem;
   }
 }
 
@@ -1566,14 +1299,6 @@ section {
 }
 
 @media (min-width: 768px) {
-  .mobile-bottom-nav {
-    display: none;
-  }
-  
-  body {
-    padding-bottom: 0;
-  }
-  
   .hero-content {
     flex-direction: row;
     text-align: right;
@@ -1593,10 +1318,6 @@ section {
 
   .footer-content {
     grid-template-columns: repeat(2, 1fr);
-  }
-  
-  .back-to-top {
-    bottom: 2rem;
   }
 }
 
@@ -1638,10 +1359,6 @@ section {
   .haircuts-grid-large {
     grid-template-columns: repeat(3, 1fr);
   }
-
-  .offers-grid-large {
-    grid-template-columns: repeat(3, 1fr);
-  }
 }
 
 /* ===== SCROLL ANIMATIONS ===== */
@@ -1654,35 +1371,6 @@ section {
 .fade-in.visible {
   opacity: 1;
   transform: translateY(0);
-}
-
-/* ===== DARK THEME ENHANCEMENTS ===== */
-.dark-theme .service-card,
-.dark-theme .haircut-card,
-.dark-theme .offer-card-large,
-.dark-theme .gallery-item,
-.dark-theme .stat-item,
-.dark-theme .card {
-  background-color: var(--background-color-alt);
-  border-color: var(--border-color);
-}
-
-.dark-theme .service-card:hover,
-.dark-theme .haircut-card:hover,
-.dark-theme .offer-card-large:hover,
-.dark-theme .gallery-item:hover,
-.dark-theme .stat-item:hover,
-.dark-theme .card:hover {
-  border-color: var(--primary-color);
-  box-shadow: 0 10px 40px rgba(241, 196, 15, 0.2);
-}
-
-.dark-theme .hero-section {
-  background: linear-gradient(135deg, var(--background-color) 0%, var(--background-color-alt) 100%);
-}
-
-.dark-theme .hero-section::before {
-  background: radial-gradient(circle at 30% 70%, rgba(241, 196, 15, 0.1) 0%, transparent 50%);
 }
 
     </style>
@@ -1700,7 +1388,6 @@ section {
                         <li><a href="#home" class="nav-link active">الرئيسية</a></li>
                         <li><a href="#services" class="nav-link">الخدمات</a></li>
                         <li><a href="#haircuts" class="nav-link">قصات الشعر</a></li>
-                       
                         <li><a href="#gallery" class="nav-link">المعرض</a></li>
                         <li><a href="#about" class="nav-link">من نحن</a></li>
                         <li><a href="#contact" class="nav-link">اتصل بنا</a></li>
@@ -1708,44 +1395,15 @@ section {
                 </nav>
                 <div class="header-buttons">
                     <a href="#booking" class="btn btn-primary">احجز الآن</a>
-                    <button class="theme-toggle" id="theme-toggle">
-                        <i class="fas fa-moon"></i>
-                        <i class="fas fa-sun"></i>
-                    </button>
                 </div>
-                <button class="mobile-menu-toggle" id="mobile-menu-toggle">
-                    <i class="fas fa-bars"></i>
-                </button>
+                
             </div>
         </div>
     </header>
 
-    <!-- Mobile Menu -->
-    <div class="mobile-menu" id="mobile-menu">
-        <ul class="mobile-nav-list">
-            <li><a href="#home" class="nav-link">الرئيسية</a></li>
-            <li><a href="#services" class="nav-link">الخدمات</a></li>
-            <li><a href="#haircuts" class="nav-link">قصات الشعر</a></li>
-            <li><a href="#offers" class="nav-link">العروض</a></li>
-           
-            <li><a href="#about" class="nav-link">من نحن</a></li>
-            <li><a href="#contact" class="nav-link">اتصل بنا</a></li>
-        </ul>
-        <div class="mobile-buttons">
-            <div class="mobile-theme-toggle">
-                <button class="theme-toggle mobile-theme-btn" id="mobile-theme-toggle">
-                    <i class="fas fa-moon"></i>
-                    <i class="fas fa-sun"></i>
-                    <span>الوضع المظلم</span>
-                </button>
-            </div>
-            <a href="#booking" class="btn btn-primary">احجز الآن</a>
-        </div>
-    </div>
-
     <!-- Mobile Bottom Navigation -->
     <nav class="mobile-bottom-nav">
-        <div class="mobile-nav-grid">
+        <div class="mobile-nav-items">
             <a href="#home" class="mobile-nav-item active" data-section="home">
                 <i class="fas fa-home"></i>
                 <span>الرئيسية</span>
@@ -1768,7 +1426,8 @@ section {
             </a>
         </div>
     </nav>
-
+<br>
+<br>
     <main>
         <!-- Hero Section -->
         <section class="hero-section" id="home">
@@ -1913,7 +1572,6 @@ section {
                                 <div class="haircut-info">
                                     <h3>قصة كلاسيكية</h3>
                                     <p>قصة شعر كلاسيكية تناسب جميع المناسبات والأعمار</p>
-                                    
                                 </div>
                             </div>
                         </div>
@@ -1925,7 +1583,6 @@ section {
                                 <div class="haircut-info">
                                     <h3>فيد</h3>
                                     <p>قصة فيد عصرية مع تلاشي تدريجي من الجوانب</p>
-                                   
                                 </div>
                             </div>
                         </div>
@@ -1937,7 +1594,6 @@ section {
                                 <div class="haircut-info">
                                     <h3>أندركت</h3>
                                     <p>قصة أندركت مع فصل واضح بين الجوانب والأعلى</p>
-                                    
                                 </div>
                             </div>
                         </div>
@@ -1949,7 +1605,6 @@ section {
                                 <div class="haircut-info">
                                     <h3>بومبادور</h3>
                                     <p>قصة بومبادور كلاسيكية مع ارتفاع من الأمام</p>
-                                    
                                 </div>
                             </div>
                         </div>
@@ -1961,7 +1616,6 @@ section {
                                 <div class="haircut-info">
                                     <h3>كروب</h3>
                                     <p>قصة كروب قصيرة ومرتبة مناسبة للصيف</p>
-                                    
                                 </div>
                             </div>
                         </div>
@@ -1973,7 +1627,6 @@ section {
                                 <div class="haircut-info">
                                     <h3>تيكست</h3>
                                     <p>قصة تيكست عصرية مع نقوش مميزة</p>
-                                    
                                 </div>
                             </div>
                         </div>
@@ -1981,9 +1634,6 @@ section {
                 </div>
             </div>
         </section>
-
-        <!-- Offers Section -->
-       
 
         <!-- Gallery Section -->
         <section class="gallery-section" id="gallery">
@@ -2079,7 +1729,6 @@ section {
                             </div>
                         </div>
                     </div>
-                    
                 </div>
             </div>
         </section>
@@ -2148,7 +1797,6 @@ section {
                                             <option value="">بروتين شعر</option>
                                             <option value="">معالج للشعر</option>
                                             <option value="">حمام زيت عادي</option>
-                                            
                                         </select>
                                     </div>
                                     <div class="form-group">
@@ -2250,10 +1898,8 @@ section {
                                     <div class="contact-text">
                                         <h3>الهاتف</h3>
                                         <p>3979 073 56 966+</p>
-                                       
                                     </div>
                                 </div>
-                               
                                 <div class="contact-info-item">
                                     <div class="contact-icon">
                                         <i class="fas fa-clock"></i>
@@ -2387,7 +2033,6 @@ section {
                         <li><a href="#home">الرئيسية</a></li>
                         <li><a href="#services">الخدمات</a></li>
                         <li><a href="#haircuts">قصات الشعر</a></li>
-                        
                         <li><a href="#gallery">المعرض</a></li>
                         <li><a href="#about">من نحن</a></li>
                         <li><a href="#contact">اتصل بنا</a></li>
@@ -2409,7 +2054,6 @@ section {
                     <ul class="footer-contact">
                         <li><i class="fas fa-map-marker-alt"></i>بحرة و حداء و المحاميد . المملكة العربية السعودية</li>
                         <li><i class="fas fa-phone"></i>3979 073 56 966+</li>
-                        
                     </ul>
                     <div class="footer-hours">
                         <h4>ساعات العمل</h4>
@@ -2519,631 +2163,364 @@ ${formData.message}
         }
 
         // تعيين السنة الحالية في الفوتر
-document.getElementById("current-year").textContent = new Date().getFullYear()
+        document.getElementById("current-year").textContent = new Date().getFullYear()
 
-// متغيرات عامة
-const mobileMenuToggle = document.getElementById("mobile-menu-toggle")
-const mobileMenu = document.getElementById("mobile-menu")
-const navLinks = document.querySelectorAll(".nav-link")
-const themeToggle = document.getElementById("theme-toggle")
-const mobileThemeToggle = document.getElementById("mobile-theme-toggle")
-const backToTopButton = document.getElementById("back-to-top")
-const bookingForm = document.getElementById("booking-form")
-const contactForm = document.getElementById("contact-form")
-const body = document.body
+        // متغيرات عامة
+        const mobileMenuToggle = document.getElementById("mobile-menu-toggle")
+        const navLinks = document.querySelectorAll(".nav-link")
+        const backToTopButton = document.getElementById("back-to-top")
+        const bookingForm = document.getElementById("booking-form")
+        const contactForm = document.getElementById("contact-form")
+        const mobileNavItems = document.querySelectorAll(".mobile-nav-item")
 
-// ==== إدارة القائمة المتحركة ====
-if (mobileMenuToggle && mobileMenu) {
-  mobileMenuToggle.addEventListener("click", () => {
-    if (mobileMenu.classList.contains("active")) {
-      mobileMenu.classList.remove("active")
-      mobileMenuToggle.innerHTML = '<i class="fas fa-bars"></i>'
-    } else {
-      mobileMenu.classList.add("active")
-      mobileMenuToggle.innerHTML = '<i class="fas fa-times"></i>'
-      mobileMenu.style.display = "block"
-    }
-  })
-}
-
-// إغلاق القائمة عند النقر على الروابط
-navLinks.forEach((link) => {
-  link.addEventListener("click", (e) => {
-    if (mobileMenu && mobileMenu.classList.contains("active")) {
-      mobileMenu.classList.remove("active")
-      if (mobileMenuToggle) {
-        mobileMenuToggle.innerHTML = '<i class="fas fa-bars"></i>'
-      }
-    }
-
-    // التمرير السلس للأقسام
-    const targetId = link.getAttribute("href")
-    if (targetId && targetId.startsWith("#")) {
-      e.preventDefault()
-      const targetSection = document.querySelector(targetId)
-      if (targetSection) {
-        const headerHeight = document.querySelector(".header").offsetHeight
-        const targetPosition = targetSection.offsetTop - headerHeight
-        window.scrollTo({
-          top: targetPosition,
-          behavior: "smooth",
+        // إغلاق القائمة عند النقر على الروابط
+        navLinks.forEach((link) => {
+            link.addEventListener("click", (e) => {
+                // التمرير السلس للأقسام
+                const targetId = link.getAttribute("href")
+                if (targetId && targetId.startsWith("#")) {
+                    e.preventDefault()
+                    const targetSection = document.querySelector(targetId)
+                    if (targetSection) {
+                        const headerHeight = document.querySelector(".header").offsetHeight
+                        const targetPosition = targetSection.offsetTop - headerHeight
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: "smooth",
+                        })
+                    }
+                }
+            })
         })
-      }
-    }
-  })
-})
 
-// ==== إدارة شريط التنقل السفلي للهواتف ====
-const mobileNavItems = document.querySelectorAll('.mobile-nav-item');
+        // إدارة شريط التنقل السفلي للهواتف
+        mobileNavItems.forEach((item) => {
+            item.addEventListener("click", (e) => {
+                e.preventDefault()
+                
+                // إزالة الفئة النشطة من جميع العناصر
+                mobileNavItems.forEach(navItem => navItem.classList.remove("active"))
+                
+                // إضافة الفئة النشطة للعنصر المنقور عليه
+                item.classList.add("active")
+                
+                // التمرير إلى القسم المطلوب
+                const targetId = item.getAttribute("href")
+                if (targetId && targetId.startsWith("#")) {
+                    const targetSection = document.querySelector(targetId)
+                    if (targetSection) {
+                        const headerHeight = document.querySelector(".header").offsetHeight
+                        const targetPosition = targetSection.offsetTop - headerHeight
+                        window.scrollTo({
+                            top: targetPosition,
+                            behavior: "smooth",
+                        })
+                    }
+                }
+            })
+        })
 
-// تحديث الحالة النشطة لشريط التنقل السفلي
-function updateMobileNavActive() {
-  const sections = document.querySelectorAll('section');
-  const scrollPosition = window.scrollY + 100;
+        // ==== إدارة التمرير ====
+        function updateActiveNavLink() {
+            const sections = document.querySelectorAll("section")
+            const scrollPosition = window.scrollY + 100
 
-  sections.forEach((section) => {
-    const sectionTop = section.offsetTop;
-    const sectionHeight = section.offsetHeight;
-    const sectionId = section.getAttribute('id');
-    
-    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-      // إزالة الحالة النشطة من جميع العناصر
-      mobileNavItems.forEach(item => item.classList.remove('active'));
-      
-      // إضافة الحالة النشطة للعنصر المطابق
-      const activeItem = document.querySelector(`.mobile-nav-item[data-section="${sectionId}"]`);
-      if (activeItem) {
-        activeItem.classList.add('active');
-      }
-    }
-  });
-}
+            sections.forEach((section) => {
+                const sectionTop = section.offsetTop
+                const sectionHeight = section.offsetHeight
+                const sectionId = section.getAttribute("id")
+                const navLink = document.querySelector(`a[href="#${sectionId}"]`)
+                const mobileNavItem = document.querySelector(`.mobile-nav-item[data-section="${sectionId}"]`)
 
-// إضافة مستمعي الأحداث لعناصر التنقل السفلي
-mobileNavItems.forEach((item) => {
-  item.addEventListener('click', (e) => {
-    e.preventDefault();
-    
-    // إزالة الحالة النشطة من جميع العناصر
-    mobileNavItems.forEach(navItem => navItem.classList.remove('active'));
-    
-    // إضافة الحالة النشطة للعنصر المنقور عليه
-    item.classList.add('active');
-    
-    // التمرير إلى القسم المطلوب
-    const targetId = item.getAttribute('href');
-    if (targetId && targetId.startsWith('#')) {
-      const targetSection = document.querySelector(targetId);
-      if (targetSection) {
-        const headerHeight = document.querySelector('.header').offsetHeight;
-        const targetPosition = targetSection.offsetTop - headerHeight;
-        window.scrollTo({
-          top: targetPosition,
-          behavior: 'smooth'
-        });
-      }
-    }
-  });
-});
-
-// ==== إدارة الوضع المظلم ====
-function getSystemTheme() {
-  return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
-}
-
-function initializeTheme() {
-  const savedTheme = localStorage.getItem("theme")
-  const systemTheme = getSystemTheme()
-
-  if (savedTheme) {
-    if (savedTheme === "dark") {
-      body.classList.add("dark-theme")
-    }
-  } else if (systemTheme === "dark") {
-    body.classList.add("dark-theme")
-  }
-
-  updateThemeIcons()
-  updateMobileThemeButtonText()
-}
-
-function updateThemeIcons() {
-  const isDark = body.classList.contains("dark-theme")
-
-  // تحديث الزر الرئيسي
-  if (themeToggle) {
-    const mainMoonIcon = themeToggle.querySelector(".fa-moon")
-    const mainSunIcon = themeToggle.querySelector(".fa-sun")
-
-    if (mainMoonIcon && mainSunIcon) {
-      if (isDark) {
-        mainMoonIcon.style.display = "none"
-        mainSunIcon.style.display = "block"
-      } else {
-        mainMoonIcon.style.display = "block"
-        mainSunIcon.style.display = "none"
-      }
-    }
-  }
-
-  // تحديث الزر المتحرك
-  if (mobileThemeToggle) {
-    const mobileMoonIcon = mobileThemeToggle.querySelector(".fa-moon")
-    const mobileSunIcon = mobileThemeToggle.querySelector(".fa-sun")
-
-    if (mobileMoonIcon && mobileSunIcon) {
-      if (isDark) {
-        mobileMoonIcon.style.display = "none"
-        mobileSunIcon.style.display = "block"
-      } else {
-        mobileMoonIcon.style.display = "block"
-        mobileSunIcon.style.display = "none"
-      }
-    }
-  }
-}
-
-function updateMobileThemeButtonText() {
-  const mobileThemeBtn = document.querySelector(".mobile-theme-btn span")
-  if (mobileThemeBtn) {
-    if (body.classList.contains("dark-theme")) {
-      mobileThemeBtn.textContent = "الوضع الفاتح"
-    } else {
-      mobileThemeBtn.textContent = "الوضع المظلم"
-    }
-  }
-}
-
-function createThemeTransitionEffect() {
-  const overlay = document.createElement("div")
-  overlay.style.cssText = `
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: ${body.classList.contains("dark-theme") ? "#1a1a1a" : "#ffffff"};
-    opacity: 0;
-    pointer-events: none;
-    z-index: 9999;
-    transition: opacity 0.3s ease;
-  `
-
-  document.body.appendChild(overlay)
-
-  setTimeout(() => {
-    overlay.style.opacity = "0.8"
-  }, 10)
-
-  setTimeout(() => {
-    overlay.style.opacity = "0"
-    setTimeout(() => {
-      if (document.body.contains(overlay)) {
-        document.body.removeChild(overlay)
-      }
-    }, 300)
-  }, 150)
-}
-
-function toggleTheme() {
-  createThemeTransitionEffect()
-
-  setTimeout(() => {
-    body.style.transition = "background-color 0.3s ease, color 0.3s ease"
-    body.classList.toggle("dark-theme")
-
-    if (body.classList.contains("dark-theme")) {
-      localStorage.setItem("theme", "dark")
-    } else {
-      localStorage.setItem("theme", "light")
-    }
-
-    updateThemeIcons()
-    updateMobileThemeButtonText()
-    updateHeaderBackground()
-
-    setTimeout(() => {
-      body.style.transition = ""
-    }, 300)
-  }, 150)
-}
-
-// ربط أزرار الوضع المظلم
-if (themeToggle) {
-  themeToggle.addEventListener("click", toggleTheme)
-}
-
-if (mobileThemeToggle) {
-  mobileThemeToggle.addEventListener("click", toggleTheme)
-}
-
-// ==== إدارة التمرير ====
-function updateActiveNavLink() {
-  const sections = document.querySelectorAll("section")
-  const scrollPosition = window.scrollY + 100
-
-  sections.forEach((section) => {
-    const sectionTop = section.offsetTop
-    const sectionHeight = section.offsetHeight
-    const sectionId = section.getAttribute("id")
-    const navLink = document.querySelector(`a[href="#${sectionId}"]`)
-
-    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-      navLinks.forEach((link) => link.classList.remove("active"))
-      if (navLink) {
-        navLink.classList.add("active")
-      }
-    }
-  })
-}
-
-function updateHeaderBackground() {
-  const header = document.querySelector(".header")
-  if (header) {
-    if (window.scrollY > 50) {
-      header.style.background = body.classList.contains("dark-theme")
-        ? "rgba(26, 26, 26, 0.98)"
-        : "rgba(255, 255, 255, 0.98)"
-    } else {
-      header.style.background = body.classList.contains("dark-theme")
-        ? "rgba(26, 26, 26, 0.95)"
-        : "rgba(255, 255, 255, 0.95)"
-    }
-  }
-}
-
-function updateBackToTopButton() {
-  if (backToTopButton) {
-    if (window.scrollY > 300) {
-      backToTopButton.classList.add("visible")
-    } else {
-      backToTopButton.classList.remove("visible")
-    }
-  }
-}
-
-function animateOnScroll() {
-  const elements = document.querySelectorAll(".fade-in")
-
-  elements.forEach((element) => {
-    const elementTop = element.getBoundingClientRect().top
-    const elementVisible = 150
-
-    if (elementTop < window.innerHeight - elementVisible) {
-      element.classList.add("visible")
-    }
-  })
-}
-
-// زر العودة لأعلى
-if (backToTopButton) {
-  backToTopButton.addEventListener("click", () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    })
-  })
-}
-
-// ==== إدارة النماذج ====
-
-// نموذج الحجز
-if (bookingForm) {
-  const bookingFormContainer = document.getElementById("booking-form-container")
-  const bookingConfirmation = document.getElementById("booking-confirmation")
-  const backToFormButton = document.getElementById("back-to-form")
-
-  bookingForm.addEventListener("submit", (e) => {
-    e.preventDefault()
-
-    // جمع بيانات النموذج
-    const formData = {
-      firstName: document.getElementById('firstName').value,
-      lastName: document.getElementById('lastName').value,
-      email: document.getElementById('email').value,
-      phone: document.getElementById('phone').value,
-      service: document.getElementById('service').value,
-      date: document.getElementById('date').value,
-      time: document.getElementById('time').value,
-      notes: document.getElementById('notes').value
-    };
-
-    // إرسال البيانات إلى الواتساب
-    sendBookingToWhatsApp(formData);
-
-    // إخفاء النموذج وإظهار رسالة التأكيد
-    if (bookingFormContainer && bookingConfirmation) {
-      bookingFormContainer.style.display = "none"
-      bookingConfirmation.style.display = "block"
-
-      // التمرير إلى رسالة التأكيد
-      bookingConfirmation.scrollIntoView({ behavior: "smooth" })
-    }
-  })
-
-  if (backToFormButton) {
-    backToFormButton.addEventListener("click", () => {
-      if (bookingFormContainer && bookingConfirmation) {
-        bookingConfirmation.style.display = "none"
-        bookingFormContainer.style.display = "block"
-        bookingForm.reset()
-      }
-    })
-  }
-
-  // تعيين الحد الأدنى للتاريخ
-  const dateInput = document.getElementById("date")
-  if (dateInput) {
-    const today = new Date()
-    const yyyy = today.getFullYear()
-    const mm = String(today.getMonth() + 1).padStart(2, "0")
-    const dd = String(today.getDate()).padStart(2, "0")
-    dateInput.min = `${yyyy}-${mm}-${dd}`
-  }
-}
-
-// نموذج الاتصال
-if (contactForm) {
-  const contactFormWrapper = document.getElementById("contact-form-wrapper")
-  const contactConfirmation = document.getElementById("contact-confirmation")
-  const sendAnotherButton = document.getElementById("send-another")
-
-  contactForm.addEventListener("submit", (e) => {
-    e.preventDefault()
-
-    // جمع بيانات النموذج
-    const formData = {
-      firstName: document.getElementById('contactFirstName').value,
-      lastName: document.getElementById('contactLastName').value,
-      email: document.getElementById('contactEmail').value,
-      phone: document.getElementById('contactPhone').value,
-      subject: document.getElementById('subject').value,
-      message: document.getElementById('message').value
-    };
-
-    // إرسال البيانات إلى الواتساب
-    sendContactToWhatsApp(formData);
-
-    // إخفاء النموذج وإظهار رسالة التأكيد
-    if (contactFormWrapper && contactConfirmation) {
-      contactFormWrapper.style.display = "none"
-      contactConfirmation.style.display = "block"
-
-      // التمرير إلى رسالة التأكيد
-      contactConfirmation.scrollIntoView({ behavior: "smooth" })
-    }
-  })
-
-  if (sendAnotherButton) {
-    sendAnotherButton.addEventListener("click", () => {
-      if (contactFormWrapper && contactConfirmation) {
-        contactConfirmation.style.display = "none"
-        contactFormWrapper.style.display = "block"
-        contactForm.reset()
-      }
-    })
-  }
-}
-
-// ==== إعداد الأحداث ====
-window.addEventListener("scroll", () => {
-  updateActiveNavLink()
-  updateMobileNavActive()
-  updateHeaderBackground()
-  updateBackToTopButton()
-  animateOnScroll()
-})
-
-// إغلاق القائمة عند النقر خارجها
-document.addEventListener("click", (e) => {
-  if (
-    mobileMenu &&
-    mobileMenu.classList.contains("active") &&
-    !mobileMenu.contains(e.target) &&
-    e.target !== mobileMenuToggle &&
-    !mobileMenuToggle.contains(e.target)
-  ) {
-    mobileMenu.classList.remove("active")
-    if (mobileMenuToggle) {
-      mobileMenuToggle.innerHTML = '<i class="fas fa-bars"></i>'
-    }
-  }
-})
-
-// إغلاق القائمة عند تغيير حجم النافذة
-window.addEventListener("resize", () => {
-  if (window.innerWidth >= 992 && mobileMenu && mobileMenu.classList.contains("active")) {
-    mobileMenu.classList.remove("active")
-    if (mobileMenuToggle) {
-      mobileMenuToggle.innerHTML = '<i class="fas fa-bars"></i>'
-    }
-  }
-})
-
-// تحسين تجربة اللمس
-if ("ontouchstart" in window) {
-  const touchButtons = document.querySelectorAll(".btn, .mobile-theme-btn, .nav-link, .theme-toggle, .mobile-nav-item")
-
-  touchButtons.forEach((button) => {
-    button.addEventListener("touchstart", function (e) {
-      this.style.transform = "scale(0.95)"
-    })
-
-    button.addEventListener("touchend", function () {
-      this.style.transform = "scale(1)"
-    })
-
-    button.addEventListener("touchcancel", function () {
-      this.style.transform = "scale(1)"
-    })
-  })
-}
-
-// تحسين الأداء على الشاشات الصغيرة
-function optimizePerformance() {
-  if (window.innerWidth <= 768) {
-    const heroSection = document.querySelector(".hero-section")
-    if (heroSection) {
-      heroSection.style.transform = "none"
-    }
-  }
-}
-
-// إضافة الرسوم المتحركة للعناصر
-document.addEventListener("DOMContentLoaded", () => {
-  initializeTheme()
-  optimizePerformance()
-
-  const animatedElements = document.querySelectorAll(
-    ".service-card, .haircut-card, .offer-card-large, .gallery-item, .stat-item, .about-text, .about-image",
-  )
-
-  animatedElements.forEach((element) => {
-    element.classList.add("fade-in")
-  })
-
-  animateOnScroll()
-  updateMobileNavActive()
-
-  // الاستماع لتغييرات تفضيل النظام
-  if (window.matchMedia) {
-    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
-      if (!localStorage.getItem("theme")) {
-        if (e.matches) {
-          body.classList.add("dark-theme")
-        } else {
-          body.classList.remove("dark-theme")
+                if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                    // تحديث التنقل العادي
+                    navLinks.forEach((link) => link.classList.remove("active"))
+                    if (navLink) {
+                        navLink.classList.add("active")
+                    }
+                    
+                    // تحديث التنقل السفلي للهواتف
+                    mobileNavItems.forEach(item => item.classList.remove("active"))
+                    if (mobileNavItem) {
+                        mobileNavItem.classList.add("active")
+                    }
+                }
+            })
         }
-        updateThemeIcons()
-        updateMobileThemeButtonText()
-      }
-    })
-  }
-})
 
-window.addEventListener("load", () => {
-  optimizePerformance()
-  updateHeaderBackground()
-  updateMobileNavActive()
-})
+        function updateHeaderBackground() {
+            const header = document.querySelector(".header")
+            if (header) {
+                if (window.scrollY > 50) {
+                    header.style.background = "rgba(26, 26, 26, 0.98)"
+                } else {
+                    header.style.background = "rgba(26, 26, 26, 0.95)"
+                }
+            }
+        }
 
-window.addEventListener("resize", () => {
-  optimizePerformance()
-  updateHeaderBackground()
-})
+        function updateBackToTopButton() {
+            if (backToTopButton) {
+                if (window.scrollY > 300) {
+                    backToTopButton.classList.add("visible")
+                } else {
+                    backToTopButton.classList.remove("visible")
+                }
+            }
+        }
 
-// تأثير البارالاكس للقسم الرئيسي
-window.addEventListener("scroll", () => {
-  if (window.innerWidth > 768) {
-    const scrolled = window.pageYOffset
-    const heroSection = document.querySelector(".hero-section")
-    if (heroSection) {
-      const rate = scrolled * -0.3
-      heroSection.style.transform = `translateY(${rate}px)`
-    }
-  }
-})
+        function animateOnScroll() {
+            const elements = document.querySelectorAll(".fade-in")
 
-// تحسين إمكانية الوصول
-function improveAccessibility() {
-  if (themeToggle) {
-    themeToggle.setAttribute("aria-label", "تبديل الوضع المظلم")
-    themeToggle.setAttribute("title", "تبديل الوضع المظلم")
-  }
+            elements.forEach((element) => {
+                const elementTop = element.getBoundingClientRect().top
+                const elementVisible = 150
 
-  if (mobileThemeToggle) {
-    mobileThemeToggle.setAttribute("aria-label", "تبديل الوضع المظلم")
-    mobileThemeToggle.setAttribute("title", "تبديل الوضع المظلم")
-  }
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add("visible")
+                }
+            })
+        }
 
-  if (mobileMenuToggle) {
-    mobileMenuToggle.setAttribute("aria-label", "فتح/إغلاق القائمة")
-  }
+        // زر العودة لأعلى
+        if (backToTopButton) {
+            backToTopButton.addEventListener("click", () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth",
+                })
+            })
+        }
 
-  if (backToTopButton) {
-    backToTopButton.setAttribute("aria-label", "العودة لأعلى")
-    backToTopButton.setAttribute("title", "العودة لأعلى")
-  }
+        // ==== إدارة النماذج ====
 
-  // إضافة تسميات للتنقل السفلي
-  mobileNavItems.forEach((item) => {
-    const text = item.querySelector('span').textContent;
-    item.setAttribute("aria-label", text);
-    item.setAttribute("title", text);
-  });
-}
+        // نموذج الحجز
+        if (bookingForm) {
+            const bookingFormContainer = document.getElementById("booking-form-container")
+            const bookingConfirmation = document.getElementById("booking-confirmation")
+            const backToFormButton = document.getElementById("back-to-form")
 
-// تطبيق تحسينات إمكانية الوصول
-document.addEventListener("DOMContentLoaded", improveAccessibility)
+            bookingForm.addEventListener("submit", (e) => {
+                e.preventDefault()
 
-// تأثيرات إضافية للمعرض
-const galleryItems = document.querySelectorAll(".gallery-item")
-galleryItems.forEach((item) => {
-  item.addEventListener("click", () => {
-    // يمكن إضافة نافذة منبثقة للصورة هنا
-    console.log("تم النقر على صورة في المعرض")
-  })
-})
+                // جمع بيانات النموذج
+                const formData = {
+                    firstName: document.getElementById('firstName').value,
+                    lastName: document.getElementById('lastName').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
+                    service: document.getElementById('service').value,
+                    date: document.getElementById('date').value,
+                    time: document.getElementById('time').value,
+                    notes: document.getElementById('notes').value
+                };
 
-// تحليلات بسيطة للنقرات
-function trackClick(element, action) {
-  console.log(`تم النقر على: ${action}`)
-  // يمكن إضافة كود التحليلات هنا
-}
+                // إرسال البيانات إلى الواتساب
+                sendBookingToWhatsApp(formData);
 
-// تتبع النقرات على الأزرار المهمة
-document.querySelectorAll(".btn-primary").forEach((btn) => {
-  btn.addEventListener("click", () => {
-    trackClick(btn, "زر أساسي")
-  })
-})
+                // إخفاء النموذج وإظهار رسالة التأكيد
+                if (bookingFormContainer && bookingConfirmation) {
+                    bookingFormContainer.style.display = "none"
+                    bookingConfirmation.style.display = "block"
 
-// رسالة ترحيب في وحدة التحكم
-console.log(`
+                    // التمرير إلى رسالة التأكيد
+                    bookingConfirmation.scrollIntoView({ behavior: "smooth" })
+                }
+            })
+
+            if (backToFormButton) {
+                backToFormButton.addEventListener("click", () => {
+                    if (bookingFormContainer && bookingConfirmation) {
+                        bookingConfirmation.style.display = "none"
+                        bookingFormContainer.style.display = "block"
+                        bookingForm.reset()
+                    }
+                })
+            }
+
+            // تعيين الحد الأدنى للتاريخ
+            const dateInput = document.getElementById("date")
+            if (dateInput) {
+                const today = new Date()
+                const yyyy = today.getFullYear()
+                const mm = String(today.getMonth() + 1).padStart(2, "0")
+                const dd = String(today.getDate()).padStart(2, "0")
+                dateInput.min = `${yyyy}-${mm}-${dd}`
+            }
+        }
+
+        // نموذج الاتصال
+        if (contactForm) {
+            const contactFormWrapper = document.getElementById("contact-form-wrapper")
+            const contactConfirmation = document.getElementById("contact-confirmation")
+            const sendAnotherButton = document.getElementById("send-another")
+
+            contactForm.addEventListener("submit", (e) => {
+                e.preventDefault()
+
+                // جمع بيانات النموذج
+                const formData = {
+                    firstName: document.getElementById('contactFirstName').value,
+                    lastName: document.getElementById('contactLastName').value,
+                    email: document.getElementById('contactEmail').value,
+                    phone: document.getElementById('contactPhone').value,
+                    subject: document.getElementById('subject').value,
+                    message: document.getElementById('message').value
+                };
+
+                // إرسال البيانات إلى الواتساب
+                sendContactToWhatsApp(formData);
+
+                // إخفاء النموذج وإظهار رسالة التأكيد
+                if (contactFormWrapper && contactConfirmation) {
+                    contactFormWrapper.style.display = "none"
+                    contactConfirmation.style.display = "block"
+
+                    // التمرير إلى رسالة التأكيد
+                    contactConfirmation.scrollIntoView({ behavior: "smooth" })
+                }
+            })
+
+            if (sendAnotherButton) {
+                sendAnotherButton.addEventListener("click", () => {
+                    if (contactFormWrapper && contactConfirmation) {
+                        contactConfirmation.style.display = "none"
+                        contactFormWrapper.style.display = "block"
+                        contactForm.reset()
+                    }
+                })
+            }
+        }
+
+        // ==== إعداد الأحداث ====
+        window.addEventListener("scroll", () => {
+            updateActiveNavLink()
+            updateHeaderBackground()
+            updateBackToTopButton()
+            animateOnScroll()
+        })
+
+        // تحسين تجربة اللمس
+        if ("ontouchstart" in window) {
+            const touchButtons = document.querySelectorAll(".btn, .nav-link, .mobile-nav-item")
+
+            touchButtons.forEach((button) => {
+                button.addEventListener("touchstart", function (e) {
+                    this.style.transform = "scale(0.95)"
+                })
+
+                button.addEventListener("touchend", function () {
+                    this.style.transform = "scale(1)"
+                })
+
+                button.addEventListener("touchcancel", function () {
+                    this.style.transform = "scale(1)"
+                })
+            })
+        }
+
+        // تحسين الأداء على الشاشات الصغيرة
+        function optimizePerformance() {
+            if (window.innerWidth <= 768) {
+                const heroSection = document.querySelector(".hero-section")
+                if (heroSection) {
+                    heroSection.style.transform = "none"
+                }
+            }
+        }
+
+        // إضافة الرسوم المتحركة للعناصر
+        document.addEventListener("DOMContentLoaded", () => {
+            optimizePerformance()
+
+            const animatedElements = document.querySelectorAll(
+                ".service-card, .haircut-card, .gallery-item, .stat-item, .about-text"
+            )
+
+            animatedElements.forEach((element) => {
+                element.classList.add("fade-in")
+            })
+
+            animateOnScroll()
+        })
+
+        window.addEventListener("load", () => {
+            optimizePerformance()
+            updateHeaderBackground()
+        })
+
+        window.addEventListener("resize", () => {
+            optimizePerformance()
+            updateHeaderBackground()
+        })
+
+        // تأثيرات إضافية للمعرض
+        const galleryItems = document.querySelectorAll(".gallery-item")
+        galleryItems.forEach((item) => {
+            item.addEventListener("click", () => {
+                console.log("تم النقر على صورة في المعرض")
+            })
+        })
+
+        // تحليلات بسيطة للنقرات
+        function trackClick(element, action) {
+            console.log(`تم النقر على: ${action}`)
+        }
+
+        // تتبع النقرات على الأزرار المهمة
+        document.querySelectorAll(".btn-primary").forEach((btn) => {
+            btn.addEventListener("click", () => {
+                trackClick(btn, "زر أساسي")
+            })
+        })
+
+        // رسالة ترحيب في وحدة التحكم
+        console.log(`
 🎉 مرحباً بك في مركز الفارس للحلاقة! 
 ✨ تم تحميل الموقع بنجاح
 🚀 جميع الوظائف تعمل بشكل مثالي
 `)
-document.addEventListener('DOMContentLoaded', () => {
-  const galleryOverlays = document.querySelectorAll('.gallery-overlay');
 
-  galleryOverlays.forEach(overlay => {
-    overlay.addEventListener('click', () => {
-      const img = overlay.parentElement.querySelector('img');
-      if (!img) return;
+        document.addEventListener('DOMContentLoaded', () => {
+            const galleryOverlays = document.querySelectorAll('.gallery-overlay');
 
-      // Create overlay background
-      const lightbox = document.createElement('div');
-      lightbox.style.position = 'fixed';
-      lightbox.style.top = 0;
-      lightbox.style.left = 0;
-      lightbox.style.width = '100vw';
-      lightbox.style.height = '100vh';
-      lightbox.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
-      lightbox.style.display = 'flex';
-      lightbox.style.justifyContent = 'center';
-      lightbox.style.alignItems = 'center';
-      lightbox.style.cursor = 'zoom-out';
-      lightbox.style.zIndex = '10000';
+            galleryOverlays.forEach(overlay => {
+                overlay.addEventListener('click', () => {
+                    const img = overlay.parentElement.querySelector('img');
+                    if (!img) return;
 
-      // Create image clone for fullscreen preview
-      const imgClone = document.createElement('img');
-      imgClone.src = img.src;
-      imgClone.style.maxWidth = '90vw';
-      imgClone.style.maxHeight = '90vh';
-      imgClone.style.borderRadius = '8px';
-      imgClone.style.boxShadow = '0 0 15px rgba(255,255,255,0.5)';
+                    // Create overlay background
+                    const lightbox = document.createElement('div');
+                    lightbox.style.position = 'fixed';
+                    lightbox.style.top = 0;
+                    lightbox.style.left = 0;
+                    lightbox.style.width = '100vw';
+                    lightbox.style.height = '100vh';
+                    lightbox.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+                    lightbox.style.display = 'flex';
+                    lightbox.style.justifyContent = 'center';
+                    lightbox.style.alignItems = 'center';
+                    lightbox.style.cursor = 'zoom-out';
+                    lightbox.style.zIndex = '10000';
 
-      lightbox.appendChild(imgClone);
-      document.body.appendChild(lightbox);
+                    // Create image clone for fullscreen preview
+                    const imgClone = document.createElement('img');
+                    imgClone.src = img.src;
+                    imgClone.style.maxWidth = '90vw';
+                    imgClone.style.maxHeight = '90vh';
+                    imgClone.style.borderRadius = '8px';
+                    imgClone.style.boxShadow = '0 0 15px rgba(255,255,255,0.5)';
 
-      // Remove overlay on click
-      lightbox.addEventListener('click', () => {
-        document.body.removeChild(lightbox);
-      });
-    });
-  });
-});
+                    lightbox.appendChild(imgClone);
+                    document.body.appendChild(lightbox);
+
+                    // Remove overlay on click
+                    lightbox.addEventListener('click', () => {
+                        document.body.removeChild(lightbox);
+                    });
+                });
+            });
+        });
     </script>
 </body>
 </html>
