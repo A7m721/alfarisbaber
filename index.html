@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
         /* ===== VARIABLES ===== */
 :root {
@@ -459,13 +460,13 @@ section {
 
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
 }
 
 .service-card {
-  background-color: var(--background-color-alt);
-  padding: 2.5rem;
+  background-color: var(--background-color);
+  padding: 2rem;
   border-radius: var(--border-radius);
   box-shadow: var(--box-shadow);
   text-align: center;
@@ -482,7 +483,7 @@ section {
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+  transition: var(--transition);
 }
 
 .service-card:hover {
@@ -494,14 +495,13 @@ section {
 .service-icon {
   width: 80px;
   height: 80px;
-  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-  color: white;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 auto 1.5rem;
   font-size: 2rem;
+  color: white;
   transition: var(--transition);
 }
 
@@ -510,7 +510,7 @@ section {
 }
 
 .service-card h3 {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   margin-bottom: 1rem;
   color: var(--text-color);
   font-weight: 700;
@@ -518,130 +518,84 @@ section {
   letter-spacing: 1px;
 }
 
-.service-card p {
-  color: var(--text-color-light);
-  margin-bottom: 1.5rem;
-  line-height: 1.6;
-}
+/* Service icon colors */
+.service-card:nth-child(1) .service-icon { background: #ff9500; }
+.service-card:nth-child(1)::before { background: #ff9500; }
 
-.service-features {
-  list-style: none;
-  text-align: right;
-  margin-bottom: 1.5rem;
-}
+.service-card:nth-child(2) .service-icon { background: #ffd700; }
+.service-card:nth-child(2)::before { background: #ffd700; }
 
-.service-features li {
-  padding: 0.5rem 0;
-  color: var(--text-color-light);
-  position: relative;
-  padding-right: 1.5rem;
-}
+.service-card:nth-child(3) .service-icon { background: #32cd32; }
+.service-card:nth-child(3)::before { background: #32cd32; }
 
-.service-features li::before {
-  content: "✓";
-  position: absolute;
-  right: 0;
-  color: var(--primary-color);
-  font-weight: bold;
-}
+.service-card:nth-child(4) .service-icon { background: #7cfc00; }
+.service-card:nth-child(4)::before { background: #7cfc00; }
 
-.service-price {
-  font-size: 1.2rem;
-  font-weight: 700;
-  color: var(--primary-color);
-  background: linear-gradient(135deg, var(--primary-color-light), transparent);
-  padding: 0.5rem 1rem;
-  border-radius: var(--border-radius-sm);
-  display: inline-block;
-}
+.service-card:nth-child(5) .service-icon { background: #87ceeb; }
+.service-card:nth-child(5)::before { background: #87ceeb; }
 
-/* ===== HAIRCUTS SECTION ===== */
-.haircuts-section {
-  background-color: var(--background-color);
-}
+.service-card:nth-child(6) .service-icon { background: #b0e0e6; }
+.service-card:nth-child(6)::before { background: #b0e0e6; }
 
-.haircuts-grid-large {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-}
+.service-card:nth-child(7) .service-icon { background: #ffffe0; color: #333; }
+.service-card:nth-child(7)::before { background: #ffffe0; }
 
-.haircut-card {
-  position: relative;
-  border-radius: var(--border-radius);
-  overflow: hidden;
-  box-shadow: var(--box-shadow);
-  transition: var(--transition);
-}
+.service-card:nth-child(8) .service-icon { background: #0000ff; }
+.service-card:nth-child(8)::before { background: #0000ff; }
 
-.haircut-card:hover {
-  transform: translateY(-10px);
-  box-shadow: var(--box-shadow-lg);
-}
+.service-card:nth-child(9) .service-icon { background: #ffd700; }
+.service-card:nth-child(9)::before { background: #ffd700; }
 
-.haircut-image {
-  position: relative;
-  height: 300px;
-  overflow: hidden;
-}
+.service-card:nth-child(10) .service-icon { background: #ff69b4; }
+.service-card:nth-child(10)::before { background: #ff69b4; }
 
-.haircut-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: var(--transition);
-}
+.service-card:nth-child(11) .service-icon { background: #c71585; }
+.service-card:nth-child(11)::before { background: #c71585; }
 
-.haircut-card:hover .haircut-image img {
-  transform: scale(1.1);
-}
+.service-card:nth-child(12) .service-icon { background: #ff69b4; }
+.service-card:nth-child(12)::before { background: #ff69b4; }
 
-.haircut-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg, rgba(212, 175, 55, 0.9), rgba(231, 76, 60, 0.8));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: var(--transition);
-}
+.service-card:nth-child(13) .service-icon { background: #c71585; }
+.service-card:nth-child(13)::before { background: #c71585; }
 
-.haircut-card:hover .haircut-overlay {
-  opacity: 1;
-}
+.service-card:nth-child(14) .service-icon { background: #87ceeb; }
+.service-card:nth-child(14)::before { background: #87ceeb; }
 
-.haircut-info {
-  text-align: center;
-  color: white;
-  padding: 2rem;
-}
+.service-card:nth-child(15) .service-icon { background: #c71585; }
+.service-card:nth-child(15)::before { background: #c71585; }
 
-.haircut-info h3 {
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
+.service-card:nth-child(16) .service-icon { background: #ff9500; }
+.service-card:nth-child(16)::before { background: #ff9500; }
 
-.haircut-info p {
-  margin-bottom: 1rem;
-  opacity: 0.9;
-  line-height: 1.6;
-}
+.service-card:nth-child(17) .service-icon { background: #ffd700; }
+.service-card:nth-child(17)::before { background: #ffd700; }
 
-.haircut-price {
-  font-size: 1.3rem;
-  font-weight: 700;
-  background: rgba(255, 255, 255, 0.2);
-  padding: 0.5rem 1rem;
-  border-radius: var(--border-radius-sm);
-  display: inline-block;
-}
+.service-card:nth-child(18) .service-icon { background: #ffd700; }
+.service-card:nth-child(18)::before { background: #ffd700; }
+
+.service-card:nth-child(19) .service-icon { background: #0000ff; }
+.service-card:nth-child(19)::before { background: #0000ff; }
+
+.service-card:nth-child(20) .service-icon { background: #8a2be2; }
+.service-card:nth-child(20)::before { background: #8a2be2; }
+
+.service-card:nth-child(21) .service-icon { background: #40e0d0; }
+.service-card:nth-child(21)::before { background: #40e0d0; }
+
+.service-card:nth-child(22) .service-icon { background: #ff0000; }
+.service-card:nth-child(22)::before { background: #ff0000; }
+
+.service-card:nth-child(23) .service-icon { background: #b0e0e6; }
+.service-card:nth-child(23)::before { background: #b0e0e6; }
+
+.service-card:nth-child(24) .service-icon { background: #c71585; }
+.service-card:nth-child(24)::before { background: #c71585; }
+
+.service-card:nth-child(25) .service-icon { background: #ff69b4; }
+.service-card:nth-child(25)::before { background: #ff69b4; }
+
+.service-card:nth-child(26) .service-icon { background: #0000ff; }
+.service-card:nth-child(26)::before { background: #0000ff; }
 
 /* ===== GALLERY SECTION ===== */
 .gallery-section {
@@ -1442,11 +1396,7 @@ section {
 
 @media (min-width: 1200px) {
   .services-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .haircuts-grid-large {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
@@ -1463,6 +1413,7 @@ section {
 }
     </style>
 </head>
+
 <body>
     <!-- Header -->
     <header class="header">
@@ -1475,7 +1426,6 @@ section {
                     <ul class="nav-list">
                         <li><a href="#home" class="nav-link active">الرئيسية</a></li>
                         <li><a href="#services" class="nav-link">الخدمات</a></li>
-                        <li><a href="#haircuts" class="nav-link">قصات الشعر</a></li>
                         <li><a href="#gallery" class="nav-link">المعرض</a></li>
                         <li><a href="#about" class="nav-link">من نحن</a></li>
                         <li><a href="#contact" class="nav-link">اتصل بنا</a></li>
@@ -1513,9 +1463,7 @@ section {
             </a>
         </div>
     </nav>
-    <br>
-    <br>
-
+    
     <main>
         <!-- Hero Section -->
         <section class="hero-section" id="home">
@@ -1567,157 +1515,157 @@ section {
                         <div class="service-icon">
                             <i class="fas fa-cut"></i>
                         </div>
-                        <h3>قص الشعر</h3>
-                        <p>قصات شعر عصرية وكلاسيكية بأيدي خبراء محترفين</p>
-                        <ul class="service-features">
-                            <li>قصات عصرية</li>
-                            <li>قصات كلاسيكية</li>
-                            <li>استشارة مجانية</li>
-                        </ul>
-                        <div class="service-price">ابتداءً من 25 ريال</div>
+                        <h3>حلاقة شعر +ذقن</h3>
                     </div>
                     <div class="service-card">
                         <div class="service-icon">
-                            <i class="fas fa-user-tie"></i>
+                            <i class="fas fa-scissors"></i>
                         </div>
-                        <h3>تشذيب اللحية</h3>
-                        <p>تشذيب وتهذيب اللحية بأحدث الأساليب والتقنيات</p>
-                        <ul class="service-features">
-                            <li>تشذيب دقيق</li>
-                            <li>تصفيف اللحية</li>
-                            <li>زيوت طبيعية</li>
-                        </ul>
-                        <div class="service-price">ابتداءً من 20 ريال</div>
+                        <h3>حلاقة شعر نحته</h3>
                     </div>
                     <div class="service-card">
                         <div class="service-icon">
-                            <i class="fas fa-spa"></i>
+                            <i class="fas fa-beard"></i>
                         </div>
-                        <h3>العناية بالوجه</h3>
-                        <p>خدمات العناية بالبشرة والوجه بمنتجات عالية الجودة</p>
-                        <ul class="service-features">
-                            <li>تنظيف البشرة</li>
-                            <li>ماسكات طبيعية</li>
-                            <li>ترطيب الوجه</li>
-                        </ul>
-                        <div class="service-price">ابتداءً من 30 ريال</div>
+                        <h3>حلاقة ذقن تحديد</h3>
                     </div>
                     <div class="service-card">
                         <div class="service-icon">
-                            <i class="fas fa-palette"></i>
+                            <i class="fas fa-razor"></i>
                         </div>
-                        <h3>صبغ الشعر</h3>
-                        <p>صبغات طبيعية وآمنة بألوان متنوعة وعصرية</p>
-                        <ul class="service-features">
-                            <li>صبغات طبيعية</li>
-                            <li>ألوان متنوعة</li>
-                            <li>ثبات طويل</li>
-                        </ul>
-                        <div class="service-price">ابتداءً من 30 ريال</div>
+                        <h3>حلاقة ذقن سكسوكه</h3>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-shaving-cream"></i>
+                        </div>
+                        <h3>حلاقة ذقن موس كامل</h3>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-child"></i>
+                        </div>
+                        <h3>حلاقة شعر طفل عادية</h3>
                     </div>
                     <div class="service-card">
                         <div class="service-icon">
                             <i class="fas fa-wind"></i>
                         </div>
-                        <h3>تصفيف الشعر</h3>
-                        <p>تصفيف احترافي للمناسبات الخاصة والأحداث المهمة</p>
-                        <ul class="service-features">
-                            <li>تصفيف احترافي</li>
-                            <li>للمناسبات</li>
-                            <li>منتجات عالية الجودة</li>
-                        </ul>
-                        <div class="service-price">ابتداءً من 30 ريال</div>
+                        <h3>استشوار</h3>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-fire"></i>
+                        </div>
+                        <h3>شمع</h3>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-hand-paper"></i>
+                        </div>
+                        <h3>سنفرة عادية</h3>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-hot-tub"></i>
+                        </div>
+                        <h3>سنفرة مع فوطة حارة</h3>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-mask"></i>
+                        </div>
+                        <h3>قناع طين vib</h3>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-steam"></i>
+                        </div>
+                        <h3>سنفرة مع البخار</h3>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-broom"></i>
+                        </div>
+                        <h3>نص تنظيف</h3>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-paint-brush"></i>
+                        </div>
+                        <h3>صبغة بيجين</h3>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-tint"></i>
+                        </div>
+                        <h3>صبغة شامبو</h3>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-oil-can"></i>
+                        </div>
+                        <h3>حمام زيت مع الجهاز</h3>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-palette"></i>
+                        </div>
+                        <h3>صبغة ذقن</h3>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                        <h3>صبغة ذقن عرسان</h3>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-leaf"></i>
+                        </div>
+                        <h3>قناع نعناع</h3>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-spa"></i>
+                        </div>
+                        <h3>قناع فلبيني</h3>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-medkit"></i>
+                        </div>
+                        <h3>معالج للقشرة</h3>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-laser"></i>
+                        </div>
+                        <h3>تنظيف كامل ليزر مع شفط دهون</h3>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-water"></i>
+                        </div>
+                        <h3>حمام مغربي</h3>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-flask"></i>
+                        </div>
+                        <h3>بروتين شعر</h3>
                     </div>
                     <div class="service-card">
                         <div class="service-icon">
                             <i class="fas fa-magic"></i>
                         </div>
-                        <h3>الباقة الشاملة</h3>
-                        <p>باقة كاملة تشمل جميع الخدمات بسعر مميز</p>
-                        <ul class="service-features">
-                            <li>قص شعر</li>
-                            <li>تشذيب لحية</li>
-                            <li>عناية بالوجه</li>
-                        </ul>
-                        <div class="service-price">200 ريال</div>
+                        <h3>معالج للشعر</h3>
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Haircuts Section -->
-        <section class="haircuts-section" id="haircuts">
-            <div class="container">
-                <div class="section-header">
-                    <h2 class="section-title">قصات الشعر</h2>
-                    <p class="section-subtitle">استعرض مجموعتنا المتنوعة من قصات الشعر العصرية والكلاسيكية</p>
-                </div>
-                <div class="haircuts-grid-large">
-                    <div class="haircut-card">
-                        <div class="haircut-image">
-                            <img src="https://img.freepik.com/free-photo/male-barber-giving-his-client-nice-haircut_23-2149186481.jpg?uid=R200304319&ga=GA1.1.429031131.1747309046&semt=ais_hybrid&w=740" alt="قصة كلاسيكية">
-                            <div class="haircut-overlay">
-                                <div class="haircut-info">
-                                    <h3>قصة كلاسيكية</h3>
-                                    <p>قصة شعر كلاسيكية تناسب جميع المناسبات والأعمار</p>
-                                </div>
-                            </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-droplet"></i>
                         </div>
-                    </div>
-                    <div class="haircut-card">
-                        <div class="haircut-image">
-                            <img src="https://img.freepik.com/free-photo/customer-getting-new-haircut-from_23-2148256987.jpg?uid=R200304319&ga=GA1.1.429031131.1747309046&semt=ais_hybrid&w=740" alt="فيد">
-                            <div class="haircut-overlay">
-                                <div class="haircut-info">
-                                    <h3>فيد</h3>
-                                    <p>قصة فيد عصرية مع تلاشي تدريجي من الجوانب</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="haircut-card">
-                        <div class="haircut-image">
-                            <img src="https://img.freepik.com/free-photo/man-getting-haircut-salon-medium-shot_23-2149141789.jpg?uid=R200304319&ga=GA1.1.429031131.1747309046&semt=ais_hybrid&w=740" alt="أندركت">
-                            <div class="haircut-overlay">
-                                <div class="haircut-info">
-                                    <h3>أندركت</h3>
-                                    <p>قصة أندركت مع فصل واضح بين الجوانب والأعلى</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="haircut-card">
-                        <div class="haircut-image">
-                            <img src="https://img.freepik.com/premium-photo/young-man-having-beard-shaven_266732-14194.jpg?uid=R200304319&ga=GA1.1.429031131.1747309046&semt=ais_hybrid&w=740" alt="بومبادور">
-                            <div class="haircut-overlay">
-                                <div class="haircut-info">
-                                    <h3>بومبادور</h3>
-                                    <p>قصة بومبادور كلاسيكية مع ارتفاع من الأمام</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="haircut-card">
-                        <div class="haircut-image">
-                            <img src="https://img.freepik.com/premium-photo/portrait-young-man-against-white-background_1048944-21922037.jpg?uid=R200304319&ga=GA1.1.429031131.1747309046&semt=ais_hybrid&w=740" alt="كروب">
-                            <div class="haircut-overlay">
-                                <div class="haircut-info">
-                                    <h3>كروب</h3>
-                                    <p>قصة كروب قصيرة ومرتبة مناسبة للصيف</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="haircut-card">
-                        <div class="haircut-image">
-                            <img src="https://img.freepik.com/premium-photo/hair-style_1263326-14477.jpg?uid=R200304319&ga=GA1.1.429031131.1747309046&semt=ais_hybrid&w=740" alt="تيكست">
-                            <div class="haircut-overlay">
-                                <div class="haircut-info">
-                                    <h3>تيكست</h3>
-                                    <p>قصة تيكست عصرية مع نقوش مميزة</p>
-                                </div>
-                            </div>
-                        </div>
+                        <h3>حمام زيت عادي</h3>
                     </div>
                 </div>
             </div>
@@ -1732,49 +1680,31 @@ section {
                 </div>
                 <div class="gallery-grid">
                     <div class="gallery-item">
-                        <img src="https://lh3.googleusercontent.com/p/AF1QipMoe88yk6d7sCntohBHTME1vuDOAfxPDW_nUTwM=w141-h235-n-k-no-nu" alt="عمل 1">
+                        <img src="https://lh3.googleusercontent.com/p/AF1QipNShTduoTAaYrNsBDSrC8sO6n_Edq4Z6vkUrqpS=s1360-w1360-h1020-rw" alt="عمل 1">
                         <div class="gallery-overlay">
                             <i class="fas fa-search-plus"></i>
                         </div>
                     </div>
                     <div class="gallery-item">
-                        <img src="https://img.freepik.com/premium-photo/man-s-hands-wearing-shirt-making-beard-form-man-with-black-hair-studio-background-portrait-close-up-trimmer-barbershop-concept_355000-1620.jpg?uid=R200304319&ga=GA1.1.429031131.1747309046&semt=ais_hybrid&w=740" alt="عمل 2">
+                        <img src="https://lh3.googleusercontent.com/p/AF1QipN0QVnX2n-3RzB-tUx4J34vPK1Fl9j4SXCs11wQ=w141-h176-n-k-no-nu" alt="عمل 2">
                         <div class="gallery-overlay">
                             <i class="fas fa-search-plus"></i>
                         </div>
                     </div>
                     <div class="gallery-item">
-                        <img src="https://lh3.googleusercontent.com/p/AF1QipOU3sLcvxUFwn5i3VrFbW3wtKMqBiyjAevpQHkT=w141-h176-n-k-no-nu" alt="عمل 3">
+                        <img src="https://lh3.googleusercontent.com/p/AF1QipPYqmfp5eaJ09oYNvj08PyMB2RVAIy6f8N8ZEdK=s1360-w1360-h1020-rw" alt="عمل 3">
                         <div class="gallery-overlay">
                             <i class="fas fa-search-plus"></i>
                         </div>
                     </div>
                     <div class="gallery-item">
-                        <img src="https://lh3.googleusercontent.com/p/AF1QipPt71JCEmvbC8FMRjXk6ywdWSrZSem1dQp0Zr7r=w141-h176-n-k-no-nu" alt="عمل 4">
+                        <img src="https://lh3.googleusercontent.com/p/AF1QipPTXhkltdLt9_e4IrH4sLvtewrPS6NPIvTtYcS4=s1360-w1360-h1020-rw" alt="عمل 4">
                         <div class="gallery-overlay">
                             <i class="fas fa-search-plus"></i>
                         </div>
                     </div>
                     <div class="gallery-item">
-                        <img src="https://lh3.googleusercontent.com/p/AF1QipN0QVnX2n-3RzB-tUx4J34vPK1Fl9j4SXCs11wQ=s1360-w1360-h1020-rw" alt="عمل 5">
-                        <div class="gallery-overlay">
-                            <i class="fas fa-search-plus"></i>
-                        </div>
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://lh3.googleusercontent.com/p/AF1QipNVCdDxvsCGw7KmFJRbu5ciLG-gNjcY54HNufc3=s1360-w1360-h1020-rw" alt="عمل 6">
-                        <div class="gallery-overlay">
-                            <i class="fas fa-search-plus"></i>
-                        </div>
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://lh3.googleusercontent.com/p/AF1QipNShTduoTAaYrNsBDSrC8sO6n_Edq4Z6vkUrqpS=s1360-w1360-h1020-rw" alt="عمل 7">
-                        <div class="gallery-overlay">
-                            <i class="fas fa-search-plus"></i>
-                        </div>
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://lh3.googleusercontent.com/p/AF1QipPYqmfp5eaJ09oYNvj08PyMB2RVAIy6f8N8ZEdK=s1360-w1360-h1020-rw" alt="عمل 8">
+                        <img src="https://lh3.googleusercontent.com/p/AF1QipMm7gtQGIZhjjzLYGxhfwmD1DvnZ4ZoQPSiHwY5=s1360-w1360-h1020-rw" alt="عمل 5">
                         <div class="gallery-overlay">
                             <i class="fas fa-search-plus"></i>
                         </div>
@@ -2056,7 +1986,7 @@ section {
                                     </div>
                                     <div class="contact-text">
                                         <h3>العنوان</h3>
-                                        <p>بحرة و حداء و المحاميد . المملكة العربية السعودية</p>
+                                        <p>بحره والمحاميد وحداء، المملكة العربية السعودية</p>
                                     </div>
                                 </div>
                                 <div class="contact-info-item">
@@ -2065,7 +1995,7 @@ section {
                                     </div>
                                     <div class="contact-text">
                                         <h3>الهاتف</h3>
-                                        <p>3979 073 56 966+</p>
+                                        <p>0549314418</p>
                                     </div>
                                 </div>
                                 <div class="contact-info-item">
@@ -2193,7 +2123,6 @@ section {
                     <ul class="footer-links">
                         <li><a href="#home">الرئيسية</a></li>
                         <li><a href="#services">الخدمات</a></li>
-                        <li><a href="#haircuts">قصات الشعر</a></li>
                         <li><a href="#gallery">المعرض</a></li>
                         <li><a href="#about">من نحن</a></li>
                         <li><a href="#contact">اتصل بنا</a></li>
@@ -2202,19 +2131,19 @@ section {
                 <div class="footer-column">
                     <h3>خدماتنا</h3>
                     <ul class="footer-links">
-                        <li>قص الشعر</li>
-                        <li>تشذيب اللحية</li>
-                        <li>العناية بالوجه</li>
-                        <li>صبغ الشعر</li>
-                        <li>تصفيف الشعر</li>
-                        <li>الباقة الشاملة</li>
+                        <li>حلاقة شعر +ذقن</li>
+                        <li>حلاقة شعر نحته</li>
+                        <li>حلاقة ذقن تحديد</li>
+                        <li>استشوار</li>
+                        <li>شمع</li>
+                        <li>سنفرة عادية</li>
                     </ul>
                 </div>
                 <div class="footer-column">
                     <h3>تواصل معنا</h3>
                     <ul class="footer-contact">
-                        <li><i class="fas fa-map-marker-alt"></i>بحرة و حداء و المحاميد . المملكة العربية السعودية</li>
-                        <li><i class="fas fa-phone"></i>3979 073 56 966+</li>
+                        <li><i class="fas fa-map-marker-alt"></i>بحره والمحاميد وحداء، المملكة العربية السعودية</li>
+                        <li><i class="fas fa-phone"></i>0549314418</li>
                     </ul>
                     <div class="footer-hours">
                         <h4>ساعات العمل</h4>
@@ -2236,7 +2165,7 @@ section {
 
     <script>
         // رقم الواتساب المحدد
-        const WHATSAPP_NUMBER = '201091889366';
+        const WHATSAPP_NUMBER = '966549314418';
 
         // دالة تنسيق التاريخ
         function formatDate(dateString) {
@@ -2619,7 +2548,7 @@ ${formData.message}
             optimizePerformance();
 
             const animatedElements = document.querySelectorAll(
-                ".service-card, .haircut-card, .gallery-item, .stat-item, .about-text"
+                ".service-card, .gallery-item, .stat-item, .about-text"
             );
 
             animatedElements.forEach((element) => {
