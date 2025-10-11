@@ -11,6 +11,71 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
+      /* تحديد موقع الأيقونة ونافذة الدردشة العائمة */
+    .chat-widget-container {
+        position: fixed;
+        bottom: 20px;
+        right: 20px; /* يمكن تغييرها إلى left: 20px إذا أردت وضعها في اليسار */
+        z-index: 1000; /* لضمان ظهورها فوق محتوى الموقع */
+        direction: rtl; /* دعم الاتجاه من اليمين لليسار */
+        font-family: 'Cairo', sans-serif;
+    }
+
+    /* تصميم زر الأيقونة */
+    .chat-icon-button {
+        background-color: #10b981; /* Primary color */
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.2s, background-color 0.2s;
+    }
+
+    .chat-icon-button:hover {
+        background-color: #059669; /* Darker hover color */
+        transform: scale(1.05);
+    }
+
+    /* إطار الشات (iframe) */
+    .chat-iframe-wrapper {
+        position: absolute;
+        bottom: 75px; /* يرتفع فوق زر الأيقونة */
+        right: 0;
+        width: 350px; /* عرض مناسب للهاتف المحمول */
+        height: 500px;
+        max-width: 90vw;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+        transform: scale(0.95); /* تأثير بسيط عند الإظهار */
+        transform-origin: bottom right; /* نقطة التحول */
+        transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+        opacity: 0;
+        pointer-events: none; /* لمنع التفاعل عندما يكون مخفياً */
+    }
+
+    /* حالة الإظهار */
+    .chat-iframe-wrapper.is-open {
+        opacity: 1;
+        transform: scale(1);
+        pointer-events: auto;
+    }
+
+    /* تصميم iframe نفسه */
+    .chat-iframe-wrapper iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+        background-color: #ffffff;
+    }
+      
         /* ===== VARIABLES ===== */
 :root {
   --primary-color: #f1c40f;
@@ -2157,6 +2222,30 @@ section {
                     </div>
                 </div>
             </div>
+      
+
+<div class="chat-widget-container">
+    <!-- إطار الدردشة الذي سيحتوي على الروبوت -->
+    <div id="chat-wrapper" class="chat-iframe-wrapper">
+        <iframe
+            src="https://a7m721.github.io/Ai/" 
+            title="روبوت خدمة عملاء مركز الفارس للعناية بالرجل"
+            frameborder="0"
+            allowfullscreen
+        >
+            عفواً، متصفحك لا يدعم الإطارات الداخلية (iframes).
+        </iframe>
+    </div>
+
+    <!-- الأيقونة التي تفتح الدردشة -->
+    <button id="chat-toggle-btn" class="chat-icon-button" onclick="toggleChat()">
+        <!-- أيقونة الدردشة (يمكن استبدالها بأي SVG آخر) -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
+        </svg>
+    </button>
+</div>
+
             <footer class="bg-white shadow-inner p-4 text-center text-gray-600 text-sm border-t border-gray-200">
      <div class="footer-bottom">
                 <p>© <span id="current-year"></span> مركز الفارس للعناية بالرجل. جميع الحقوق محفوظة.</p>
@@ -2629,7 +2718,19 @@ ${formData.message}
 ✨ تم تحميل الموقع بنجاح
 🚀 جميع الوظائف تعمل بشكل مثالي
         `);
+      
+      function toggleChat() {
+        const chatWrapper = document.getElementById('chat-wrapper');
+        const isCurrentlyOpen = chatWrapper.classList.contains('is-open');
+
+        if (isCurrentlyOpen) {
+            // إخفاء الشات
+            chatWrapper.classList.remove('is-open');
+        } else {
+            // إظهار الشات
+            chatWrapper.classList.add('is-open');
+        }
+    }
     </script>
 </body>
 </html>
-
