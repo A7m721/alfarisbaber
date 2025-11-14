@@ -1977,9 +1977,10 @@ section {
                                         <label for="notes">ملاحظات إضافية (اختياري)</label>
                                         <textarea id="notes" name="notes" placeholder="أي ملاحظات أو طلبات خاصة" rows="3"></textarea>
                                     </div>
-                                    <button type="submit" class="btn btn-primary btn-block">تأكيد الحجز</button>
+                                    <button type="submit" id="submit" class="btn btn-primary btn-block">تأكيد الحجز</button>
                                 </form>
                             </div>
+                            
                         </div>
                     </div>
 
@@ -2228,7 +2229,7 @@ section {
     <!-- إطار الدردشة الذي سيحتوي على الروبوت -->
     <div id="chat-wrapper" class="chat-iframe-wrapper">
         <iframe
-            src="https://a7m721.github.io/Ai/" 
+            src="https://a7m721.github.io/Contact/" 
             title="روبوت خدمة عملاء مركز الفارس للعناية بالرجل"
             frameborder="0"
             allowfullscreen
@@ -2236,7 +2237,6 @@ section {
             عفواً، متصفحك لا يدعم الإطارات الداخلية (iframes).
         </iframe>
     </div>
-
     <!-- الأيقونة التي تفتح الدردشة -->
     <button id="chat-toggle-btn" class="chat-icon-button" onclick="toggleChat()">
         <!-- أيقونة الدردشة (يمكن استبدالها بأي SVG آخر) -->
@@ -2271,63 +2271,124 @@ section {
     </button>
 
     <script>
-        // رقم الواتساب المحدد
-        const WHATSAPP_NUMBER = '966549314418';
+        // --- Google Sheets Submission Logic Setup ---
+    // The Google App Script URL for booking form submission
+    const BOOKING_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyyNNZ_dMsGAgChYV8ehAaxoCDgAq73nEH15apik27yckTceg8bJb6vsxnbRnRyGeQUiQ/exec';
+    
+    // WhatsApp Number (Used only for the Contact Form now)
+    const WHATSAPP_NUMBER = '966549314418';
 
-        // دالة تنسيق التاريخ
-        function formatDate(dateString) {
-            const date = new Date(dateString);
-            return date.toLocaleDateString('ar-SA', {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            });
+  // Global elements
+  // Ensure a message box exists (the original code referenced #message-box but the element
+  // may be missing which caused runtime errors). Create a small transient message box if needed.
+  let messageBox = document.getElementById('message-box');
+  if (!messageBox) {
+    messageBox = document.createElement('div');
+    messageBox.id = 'message-box';
+    // Basic inline styling so it appears above content and is readable.
+    Object.assign(messageBox.style, {
+      position: 'fixed',
+      top: '20px',
+      left: '50%',
+      transform: 'translateX(-50%)',
+      padding: '12px 18px',
+      borderRadius: '8px',
+      color: '#fff',
+      zIndex: '20000',
+      opacity: '0',
+      transition: 'opacity 0.3s ease, transform 0.3s ease',
+      pointerEvents: 'none',
+      fontFamily: 'Cairo, sans-serif',
+      fontSize: '14px'
+    });
+    document.body.appendChild(messageBox);
+  }
+  const bookingForm = document.getElementById("booking-form");
+    const contactForm = document.getElementById("contact-form");
+    
+  /**
+   * Shows a custom, transient message box instead of using alert().
+   * Uses inline styles so it works even if utility classes are not present.
+   * @param {string} message - The text to display.
+   * @param {string} type - 'success' or 'error'.
+   */
+  function showMessage(message, type = 'success') {
+    // Stop any previous timers
+    if (messageBox.hideTimeout) clearTimeout(messageBox.hideTimeout);
+
+    messageBox.textContent = message;
+
+    // Choose background color based on type
+    if (type === 'success') {
+      messageBox.style.backgroundColor = '#16a34a'; // green
+    } else {
+      messageBox.style.backgroundColor = '#dc2626'; // red
+    }
+
+    // Show
+    messageBox.style.pointerEvents = 'auto';
+    messageBox.style.opacity = '1';
+    messageBox.style.transform = 'translateX(-50%) translateY(0)';
+
+    // Hide after 5 seconds
+    messageBox.hideTimeout = setTimeout(() => {
+      messageBox.style.opacity = '0';
+      messageBox.style.pointerEvents = 'none';
+    }, 5000);
+  }
+    
+    /**
+     * Simple Exponential Backoff Retry mechanism for Fetch requests.
+     */
+    async function submitFormWithRetry(url, formData, maxRetries = 3, delay = 1000) {
+        for (let i = 0; i < maxRetries; i++) {
+            try {
+                const response = await fetch(url, { method: 'POST', body: formData });
+                // Note: The Google Script usually returns 200 OK even if the script fails internally, 
+                // but this handles general network/HTTP errors.
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response; // Success, return the response
+            } catch (error) {
+                console.error(`Attempt ${i + 1} failed:`, error);
+                if (i === maxRetries - 1) {
+                    throw error; // Throw final error if all retries fail
+                }
+                // Exponential backoff delay
+                await new Promise(resolve => setTimeout(resolve, delay * (2 ** i)));
+            }
         }
+    }
 
-        // دالة تنسيق الوقت
-        function formatTime(timeString) {
-            const [hours, minutes] = timeString.split(':');
-            const date = new Date();
-            date.setHours(parseInt(hours), parseInt(minutes));
-            return date.toLocaleTimeString('ar-SA', {
-                hour: '2-digit',
-                minute: '2-digit',
-                hour12: true
-            });
-        }
+    // دالة تنسيق التاريخ
+    function formatDate(dateString) {
+        if (!dateString) return 'لم يحدد';
+        const date = new Date(dateString);
+        return date.toLocaleDateString('ar-SA', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+    }
 
-        // دالة إرسال بيانات الحجز إلى الواتساب
-        function sendBookingToWhatsApp(formData) {
-            const selectedServices = [];
-            const checkboxes = document.querySelectorAll('input[name="services"]:checked');
-            checkboxes.forEach(checkbox => {
-                selectedServices.push(checkbox.value);
-            });
-            
-            const message = `🎯 *حجز موعد جديد - مركز الفارس*
-
-👤 *بيانات العميل:*
-الاسم: ${formData.firstName} ${formData.lastName}
-رقم الهاتف: ${formData.phone}
-
-✂️ *تفاصيل الحجز:*
-الخدمات: ${selectedServices.join(', ')}
-التاريخ: ${formatDate(formData.date)}
-الوقت: ${formatTime(formData.time)}
-
-${formData.notes ? `📝 *ملاحظات:*\n${formData.notes}` : ''}
-
----
-تم الإرسال من موقع مركز الفارس`.trim();
-
-            const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-            window.open(whatsappUrl, '_blank');
-        }
-
-        // دالة إرسال رسالة الاتصال إلى الواتساب
-        function sendContactToWhatsApp(formData) {
-            const message = `📞 *رسالة جديدة - مركز الفارس*
+    // دالة تنسيق الوقت
+    function formatTime(timeString) {
+        if (!timeString) return 'لم يحدد';
+        const [hours, minutes] = timeString.split(':');
+        const date = new Date();
+        date.setHours(parseInt(hours), parseInt(minutes));
+        return date.toLocaleTimeString('ar-SA', {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true
+        });
+    }
+    
+    // دالة إرسال رسالة الاتصال إلى الواتساب (مستخدمة فقط لنموذج الاتصال)
+    function sendContactToWhatsApp(formData) {
+        const message = `📞 *رسالة جديدة - مركز الفارس*
 
 👤 *بيانات المرسل:*
 الاسم: ${formData.firstName} ${formData.lastName}
@@ -2341,384 +2402,413 @@ ${formData.message}
 ---
 تم الإرسال من موقع مركز الفارس`.trim();
 
-            const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-            window.open(whatsappUrl, '_blank');
+        const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+        window.open(whatsappUrl, '_blank');
+    }
+
+    // متغيرات عامة أخرى
+    const navLinks = document.querySelectorAll(".nav-link");
+    const backToTopButton = document.getElementById("back-to-top");
+    const mobileNavItems = document.querySelectorAll(".mobile-nav-item");
+
+    // Services dropdown functionality elements
+    const servicesDropdownHeader = document.getElementById('services-dropdown-header');
+    const servicesDropdownContent = document.getElementById('services-dropdown-content');
+    const dropdownArrow = document.getElementById('dropdown-arrow');
+    const servicesPlaceholder = document.getElementById('services-placeholder');
+    const selectedServicesInput = document.getElementById('selected-services'); // Hidden input for form submission
+
+    servicesDropdownHeader.addEventListener('click', function() {
+        const isOpen = servicesDropdownContent.classList.contains('show');
+        
+        if (isOpen) {
+            servicesDropdownContent.classList.remove('show');
+            servicesDropdownHeader.classList.remove('active');
+            dropdownArrow.classList.remove('rotated');
+        } else {
+            servicesDropdownContent.classList.add('show');
+            servicesDropdownHeader.classList.add('active');
+            dropdownArrow.classList.add('rotated');
         }
+    });
 
-        // تعيين السنة الحالية في الفوتر
-        document.getElementById("current-year").textContent = new Date().getFullYear();
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(event) {
+        if (!event.target.closest('.services-dropdown')) {
+            servicesDropdownContent.classList.remove('show');
+            servicesDropdownHeader.classList.remove('active');
+            dropdownArrow.classList.remove('rotated');
+        }
+    });
 
-        // متغيرات عامة
-        const navLinks = document.querySelectorAll(".nav-link");
-        const backToTopButton = document.getElementById("back-to-top");
-        const bookingForm = document.getElementById("booking-form");
-        const contactForm = document.getElementById("contact-form");
-        const mobileNavItems = document.querySelectorAll(".mobile-nav-item");
+    // Handle service selection
+    const serviceCheckboxes = document.querySelectorAll('input[name="services"]');
+    serviceCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', updateSelectedServices);
+    });
 
-        // Services dropdown functionality
-        const servicesDropdownHeader = document.getElementById('services-dropdown-header');
-        const servicesDropdownContent = document.getElementById('services-dropdown-content');
-        const dropdownArrow = document.getElementById('dropdown-arrow');
-        const servicesPlaceholder = document.getElementById('services-placeholder');
-        const selectedServicesDiv = document.getElementById('selected-services');
-
-        servicesDropdownHeader.addEventListener('click', function() {
-            const isOpen = servicesDropdownContent.classList.contains('show');
-            
-            if (isOpen) {
-                servicesDropdownContent.classList.remove('show');
-                servicesDropdownHeader.classList.remove('active');
-                dropdownArrow.classList.remove('rotated');
-            } else {
-                servicesDropdownContent.classList.add('show');
-                servicesDropdownHeader.classList.add('active');
-                dropdownArrow.classList.add('rotated');
-            }
-        });
-
-        // Close dropdown when clicking outside
-        document.addEventListener('click', function(event) {
-            if (!event.target.closest('.services-dropdown')) {
-                servicesDropdownContent.classList.remove('show');
-                servicesDropdownHeader.classList.remove('active');
-                dropdownArrow.classList.remove('rotated');
-            }
-        });
-
-        // Handle service selection
-        const serviceCheckboxes = document.querySelectorAll('input[name="services"]');
+    function updateSelectedServices() {
+        const selectedServices = [];
         serviceCheckboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', updateSelectedServices);
+            if (checkbox.checked) {
+                selectedServices.push(checkbox.value);
+            }
         });
 
-        function updateSelectedServices() {
-            const selectedServices = [];
-            serviceCheckboxes.forEach(checkbox => {
-                if (checkbox.checked) {
-                    selectedServices.push(checkbox.value);
-                }
-            });
+        if (selectedServices.length > 0) {
+            servicesPlaceholder.textContent = `تم اختيار ${selectedServices.length} خدمة`;
+            // Update the hidden input value for Google Sheets
+            selectedServicesInput.value = selectedServices.join(', ');
+        } else {
+            servicesPlaceholder.textContent = 'اختر الخدمات المطلوبة';
+            selectedServicesInput.value = '';
+        }
+    }
 
-            if (selectedServices.length > 0) {
-                servicesPlaceholder.textContent = `تم اختيار ${selectedServices.length} خدمة`;
-                selectedServicesDiv.textContent = `الخدمات المختارة: ${selectedServices.join(', ')}`;
-            } else {
-                servicesPlaceholder.textContent = 'اختر الخدمات المطلوبة';
-                selectedServicesDiv.textContent = '';
-            }
+
+    // نموذج الحجز (المنطق الجديد للإرسال إلى Google Sheets)
+    if (bookingForm) {
+        const bookingFormContainer = document.getElementById("booking-form-container");
+        const bookingConfirmation = document.getElementById("booking-confirmation");
+        
+        // إعداد الحد الأدنى للتاريخ
+        const dateInput = document.getElementById("date");
+        if (dateInput) {
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, "0");
+            const dd = String(today.getDate()).padStart(2, "0");
+            dateInput.min = `${yyyy}-${mm}-${dd}`;
         }
 
-        // إغلاق القائمة عند النقر على الروابط
-        navLinks.forEach((link) => {
-            link.addEventListener("click", (e) => {
-                const targetId = link.getAttribute("href");
-                if (targetId && targetId.startsWith("#")) {
-                    e.preventDefault();
-                    const targetSection = document.querySelector(targetId);
-                    if (targetSection) {
-                        const headerHeight = document.querySelector(".header").offsetHeight;
-                        const targetPosition = targetSection.offsetTop - headerHeight;
-                        window.scrollTo({
-                            top: targetPosition,
-                            behavior: "smooth",
-                        });
-                    }
-                }
-            });
+        // معالج الإرسال الجديد
+        bookingForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            // التحقق من اختيار خدمة واحدة على الأقل
+            const selectedServices = document.querySelectorAll('input[name="services"]:checked');
+            if (selectedServices.length === 0) {
+                showMessage('يرجى اختيار خدمة واحدة على الأقل', 'error'); 
+                return;
+            }
+
+            const submitButton = bookingForm.querySelector('button[type="submit"]');
+            const originalText = submitButton ? submitButton.textContent : 'حجز الموعد';
+
+            // حالة التحميل
+            if (submitButton) {
+                submitButton.disabled = true;
+                submitButton.textContent = 'جاري الإرسال...';
+            }
+
+      try {
+        // إرسال البيانات باستخدام دالة إعادة المحاولة والـ FormData
+        await submitFormWithRetry(BOOKING_SCRIPT_URL, new FormData(bookingForm));
+
+        // رسالة النجاح
+        showMessage("تم تأكيد الحجز! سيتم إرسال بياناتك  بنجاح.", 'success');
+
+        // إعادة تعيين النموذج
+        bookingForm.reset();
+        updateSelectedServices(); // لتحديث حالة الخدمات المختارة
+
+        // أظهر بطاقة التأكيد وأخفِ النموذج
+        if (bookingFormContainer && bookingConfirmation) {
+          bookingFormContainer.style.display = "none";
+          bookingConfirmation.style.display = "block";
+          // تمرير العرض إلى بطاقة التأكيد
+          bookingConfirmation.scrollIntoView({ behavior: 'smooth' });
+        }
+
+      } catch (error) {
+        // رسالة الخطأ
+        console.error('Final Submission Error to Google Sheets:', error);
+        showMessage("فشل الإرسال. يرجى التحقق من اتصالك والمحاولة مرة أخرى.", 'error');
+
+      } finally {
+        // استعادة حالة الزر
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.textContent = originalText;
+        }
+      }
         });
-
-        // إدارة شريط التنقل السفلي للهواتف
-        mobileNavItems.forEach((item) => {
-            item.addEventListener("click", (e) => {
-                e.preventDefault();
-                
-                mobileNavItems.forEach(navItem => navItem.classList.remove("active"));
-                item.classList.add("active");
-                
-                const targetId = item.getAttribute("href");
-                if (targetId && targetId.startsWith("#")) {
-                    const targetSection = document.querySelector(targetId);
-                    if (targetSection) {
-                        const headerHeight = document.querySelector(".header").offsetHeight;
-                        const targetPosition = targetSection.offsetTop - headerHeight;
-                        window.scrollTo({
-                            top: targetPosition,
-                            behavior: "smooth",
-                        });
-                    }
-                }
-            });
-        });
-
-        // إدارة التمرير
-        function updateActiveNavLink() {
-            const sections = document.querySelectorAll("section");
-            const scrollPosition = window.scrollY + 100;
-
-            sections.forEach((section) => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.offsetHeight;
-                const sectionId = section.getAttribute("id");
-                const navLink = document.querySelector(`a[href="#${sectionId}"]`);
-                const mobileNavItem = document.querySelector(`.mobile-nav-item[href="#${sectionId}"]`);
-
-                if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-                    navLinks.forEach((link) => link.classList.remove("active"));
-                    if (navLink) {
-                        navLink.classList.add("active");
-                    }
-                    
-                    mobileNavItems.forEach(item => item.classList.remove("active"));
-                    if (mobileNavItem) {
-                        mobileNavItem.classList.add("active");
-                    }
-                }
-            });
-        }
-
-        function updateHeaderBackground() {
-            const header = document.querySelector(".header");
-            if (header) {
-                if (window.scrollY > 50) {
-                    header.style.background = "rgba(26, 26, 26, 0.98)";
-                } else {
-                    header.style.background = "rgba(26, 26, 26, 0.95)";
-                }
-            }
-        }
-
-        function updateBackToTopButton() {
-            if (backToTopButton) {
-                if (window.scrollY > 300) {
-                    backToTopButton.classList.add("visible");
-                } else {
-                    backToTopButton.classList.remove("visible");
-                }
-            }
-        }
-
-        function animateOnScroll() {
-            const elements = document.querySelectorAll(".fade-in");
-
-            elements.forEach((element) => {
-                const elementTop = element.getBoundingClientRect().top;
-                const elementVisible = 150;
-
-                if (elementTop < window.innerHeight - elementVisible) {
-                    element.classList.add("visible");
-                }
-            });
-        }
-
-        // زر العودة لأعلى
-        if (backToTopButton) {
-            backToTopButton.addEventListener("click", () => {
-                window.scrollTo({
-                    top: 0,
-                    behavior: "smooth",
-                });
-            });
-        }
-
-        // نموذج الحجز
-        if (bookingForm) {
-            const bookingFormContainer = document.getElementById("booking-form-container");
-            const bookingConfirmation = document.getElementById("booking-confirmation");
-            const backToFormButton = document.getElementById("back-to-form");
-
-            bookingForm.addEventListener("submit", (e) => {
-                e.preventDefault();
-
-                // التحقق من اختيار خدمة واحدة على الأقل
-                const selectedServices = document.querySelectorAll('input[name="services"]:checked');
-                if (selectedServices.length === 0) {
-                    alert('يرجى اختيار خدمة واحدة على الأقل');
-                    return;
-                }
-
-                const formData = {
-                    firstName: document.getElementById('firstName').value,
-                    lastName: document.getElementById('lastName').value,
-                    phone: document.getElementById('phone').value,
-                    date: document.getElementById('date').value,
-                    time: document.getElementById('time').value,
-                    notes: document.getElementById('notes').value
-                };
-
-                sendBookingToWhatsApp(formData);
-
+        
+        // منطق زر العودة (للحجز الآخر - يمكن إزالته لكن نتركه احتياطياً)
+        const backToFormButton = document.getElementById("back-to-form");
+        if (backToFormButton) {
+            backToFormButton.addEventListener("click", () => {
                 if (bookingFormContainer && bookingConfirmation) {
-                    bookingFormContainer.style.display = "none";
-                    bookingConfirmation.style.display = "block";
-                    bookingConfirmation.scrollIntoView({ behavior: "smooth" });
+                    bookingConfirmation.style.display = "none";
+                    bookingFormContainer.style.display = "block";
+                    bookingForm.reset();
+                    updateSelectedServices();
                 }
             });
-
-            if (backToFormButton) {
-                backToFormButton.addEventListener("click", () => {
-                    if (bookingFormContainer && bookingConfirmation) {
-                        bookingConfirmation.style.display = "none";
-                        bookingFormContainer.style.display = "block";
-                        bookingForm.reset();
-                        updateSelectedServices();
-                    }
-                });
-            }
-
-            // تعيين الحد الأدنى للتاريخ
-            const dateInput = document.getElementById("date");
-            if (dateInput) {
-                const today = new Date();
-                const yyyy = today.getFullYear();
-                const mm = String(today.getMonth() + 1).padStart(2, "0");
-                const dd = String(today.getDate()).padStart(2, "0");
-                dateInput.min = `${yyyy}-${mm}-${dd}`;
-            }
         }
+    }
 
-        // نموذج الاتصال
-        if (contactForm) {
-            const contactFormWrapper = document.getElementById("contact-form-wrapper");
-            const contactConfirmation = document.getElementById("contact-confirmation");
-            const sendAnotherButton = document.getElementById("send-another");
+    // نموذج الاتصال (المنطق القديم: الإرسال عبر الواتساب)
+    if (contactForm) {
+        const contactFormWrapper = document.getElementById("contact-form-wrapper");
+        const contactConfirmation = document.getElementById("contact-confirmation");
+        const sendAnotherButton = document.getElementById("send-another");
 
-            contactForm.addEventListener("submit", (e) => {
-                e.preventDefault();
+        contactForm.addEventListener("submit", (e) => {
+            e.preventDefault();
 
-                const formData = {
-                    firstName: document.getElementById('contactFirstName').value,
-                    lastName: document.getElementById('contactLastName').value,
-                    phone: document.getElementById('contactPhone').value,
-                    subject: document.getElementById('subject').value,
-                    message: document.getElementById('message').value
-                };
+            const formData = {
+                firstName: document.getElementById('contactFirstName').value,
+                lastName: document.getElementById('contactLastName').value,
+                phone: document.getElementById('contactPhone').value,
+                subject: document.getElementById('subject').value,
+                message: document.getElementById('message').value
+            };
 
-                sendContactToWhatsApp(formData);
+            sendContactToWhatsApp(formData);
 
+            if (contactFormWrapper && contactConfirmation) {
+                contactFormWrapper.style.display = "none";
+                contactConfirmation.style.display = "block";
+                contactConfirmation.scrollIntoView({ behavior: "smooth" });
+            }
+        });
+
+        if (sendAnotherButton) {
+            sendAnotherButton.addEventListener("click", () => {
                 if (contactFormWrapper && contactConfirmation) {
-                    contactFormWrapper.style.display = "none";
-                    contactConfirmation.style.display = "block";
-                    contactConfirmation.scrollIntoView({ behavior: "smooth" });
+                    contactConfirmation.style.display = "none";
+                    contactFormWrapper.style.display = "block";
+                    contactForm.reset();
                 }
             });
-
-            if (sendAnotherButton) {
-                sendAnotherButton.addEventListener("click", () => {
-                    if (contactFormWrapper && contactConfirmation) {
-                        contactConfirmation.style.display = "none";
-                        contactFormWrapper.style.display = "block";
-                        contactForm.reset();
-                    }
-                });
-            }
         }
+    }
 
-        // إعداد الأحداث
-        window.addEventListener("scroll", () => {
-            updateActiveNavLink();
-            updateHeaderBackground();
-            updateBackToTopButton();
-            animateOnScroll();
-        });
+    // تعيين السنة الحالية في الفوتر
+    document.getElementById("current-year").textContent = new Date().getFullYear();
 
-        // تحسين تجربة اللمس
-        if ("ontouchstart" in window) {
-            const touchButtons = document.querySelectorAll(".btn, .nav-link, .mobile-nav-item");
-
-            touchButtons.forEach((button) => {
-                button.addEventListener("touchstart", function (e) {
-                    this.style.transform = "scale(0.95)";
-                });
-
-                button.addEventListener("touchend", function () {
-                    this.style.transform = "scale(1)";
-                });
-
-                button.addEventListener("touchcancel", function () {
-                    this.style.transform = "scale(1)";
-                });
-            });
-        }
-
-        // تحسين الأداء على الشاشات الصغيرة
-        function optimizePerformance() {
-            if (window.innerWidth <= 768) {
-                const heroSection = document.querySelector(".hero-section");
-                if (heroSection) {
-                    heroSection.style.transform = "none";
+    // إدارة شريط التنقل السفلي للهواتف
+    mobileNavItems.forEach((item) => {
+        item.addEventListener("click", (e) => {
+            e.preventDefault();
+            
+            mobileNavItems.forEach(navItem => navItem.classList.remove("active"));
+            item.classList.add("active");
+            
+            const targetId = item.getAttribute("href");
+            if (targetId && targetId.startsWith("#")) {
+                const targetSection = document.querySelector(targetId);
+                if (targetSection) {
+                    const headerHeight = document.querySelector(".header").offsetHeight;
+                    const targetPosition = targetSection.offsetTop - headerHeight;
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: "smooth",
+                    });
                 }
             }
+        });
+    });
+    
+    // إغلاق القائمة عند النقر على الروابط
+    navLinks.forEach((link) => {
+        link.addEventListener("click", (e) => {
+            const targetId = link.getAttribute("href");
+            if (targetId && targetId.startsWith("#")) {
+                e.preventDefault();
+                const targetSection = document.querySelector(targetId);
+                if (targetSection) {
+                    const headerHeight = document.querySelector(".header").offsetHeight;
+                    const targetPosition = targetSection.offsetTop - headerHeight;
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: "smooth",
+                    });
+                }
+            }
+        });
+    });
+
+    // إدارة التمرير
+    function updateActiveNavLink() {
+        const sections = document.querySelectorAll("section");
+        const scrollPosition = window.scrollY + 100;
+
+        sections.forEach((section) => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.offsetHeight;
+            const sectionId = section.getAttribute("id");
+            const navLink = document.querySelector(`a[href="#${sectionId}"]`);
+            const mobileNavItem = document.querySelector(`.mobile-nav-item[href="#${sectionId}"]`);
+
+            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                navLinks.forEach((link) => link.classList.remove("active"));
+                if (navLink) {
+                    navLink.classList.add("active");
+                }
+                
+                mobileNavItems.forEach(item => item.classList.remove("active"));
+                if (mobileNavItem) {
+                    mobileNavItem.classList.add("active");
+                }
+            }
+        });
+    }
+
+    function updateHeaderBackground() {
+        const header = document.querySelector(".header");
+        if (header) {
+            if (window.scrollY > 50) {
+                header.style.background = "rgba(26, 26, 26, 0.98)";
+            } else {
+                header.style.background = "rgba(26, 26, 26, 0.95)";
+            }
         }
+    }
 
-        // إضافة الرسوم المتحركة للعناصر
-        document.addEventListener("DOMContentLoaded", () => {
-            optimizePerformance();
+    function updateBackToTopButton() {
+        if (backToTopButton) {
+            if (window.scrollY > 300) {
+                backToTopButton.classList.add("visible");
+            } else {
+                backToTopButton.classList.remove("visible");
+            }
+        }
+    }
 
-            const animatedElements = document.querySelectorAll(
-                ".service-card, .gallery-item, .stat-item, .about-text"
-            );
+    function animateOnScroll() {
+        const elements = document.querySelectorAll(".fade-in");
 
-            animatedElements.forEach((element) => {
-                element.classList.add("fade-in");
-            });
+        elements.forEach((element) => {
+            const elementTop = element.getBoundingClientRect().top;
+            const elementVisible = 150;
 
-            animateOnScroll();
+            if (elementTop < window.innerHeight - elementVisible) {
+                element.classList.add("visible");
+            }
         });
+    }
 
-        window.addEventListener("load", () => {
-            optimizePerformance();
-            updateHeaderBackground();
-        });
-
-        window.addEventListener("resize", () => {
-            optimizePerformance();
-            updateHeaderBackground();
-        });
-
-        // تأثيرات إضافية للمعرض
-        const galleryItems = document.querySelectorAll(".gallery-item");
-        galleryItems.forEach((item) => {
-            item.addEventListener("click", () => {
-                const img = item.querySelector('img');
-                if (!img) return;
-
-                // Create lightbox
-                const lightbox = document.createElement('div');
-                lightbox.style.position = 'fixed';
-                lightbox.style.top = 0;
-                lightbox.style.left = 0;
-                lightbox.style.width = '100vw';
-                lightbox.style.height = '100vh';
-                lightbox.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
-                lightbox.style.display = 'flex';
-                lightbox.style.justifyContent = 'center';
-                lightbox.style.alignItems = 'center';
-                lightbox.style.cursor = 'zoom-out';
-                lightbox.style.zIndex = '10000';
-
-                const imgClone = document.createElement('img');
-                imgClone.src = img.src;
-                imgClone.style.maxWidth = '90vw';
-                imgClone.style.maxHeight = '90vh';
-                imgClone.style.borderRadius = '8px';
-                imgClone.style.boxShadow = '0 0 15px rgba(255,255,255,0.5)';
-
-                lightbox.appendChild(imgClone);
-                document.body.appendChild(lightbox);
-
-                lightbox.addEventListener('click', () => {
-                    document.body.removeChild(lightbox);
-                });
+    // زر العودة لأعلى
+    if (backToTopButton) {
+        backToTopButton.addEventListener("click", () => {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth",
             });
         });
+    }
 
-        // رسالة ترحيب في وحدة التحكم
-        console.log(`
+
+    // إعداد الأحداث
+    window.addEventListener("scroll", () => {
+        updateActiveNavLink();
+        updateHeaderBackground();
+        updateBackToTopButton();
+        animateOnScroll();
+    });
+
+    // تحسين تجربة اللمس
+    if ("ontouchstart" in window) {
+        const touchButtons = document.querySelectorAll(".btn-primary, .nav-link, .mobile-nav-item");
+
+        touchButtons.forEach((button) => {
+            button.addEventListener("touchstart", function (e) {
+                this.style.transform = "scale(0.95)";
+            });
+
+            button.addEventListener("touchend", function () {
+                this.style.transform = "scale(1)";
+            });
+
+            button.addEventListener("touchcancel", function () {
+                this.style.transform = "scale(1)";
+            });
+        });
+    }
+
+    // تحسين الأداء على الشاشات الصغيرة
+    function optimizePerformance() {
+        if (window.innerWidth <= 768) {
+            const heroSection = document.querySelector(".hero-section");
+            if (heroSection) {
+                heroSection.style.transform = "none";
+            }
+        }
+    }
+
+    // إضافة الرسوم المتحركة للعناصر
+    document.addEventListener("DOMContentLoaded", () => {
+        optimizePerformance();
+
+        const animatedElements = document.querySelectorAll(
+            ".service-card, .gallery-item, .stat-item, .about-text"
+        );
+
+        animatedElements.forEach((element) => {
+            element.classList.add("fade-in");
+        });
+
+        animateOnScroll();
+    });
+
+    window.addEventListener("load", () => {
+        optimizePerformance();
+        updateHeaderBackground();
+    });
+
+    window.addEventListener("resize", () => {
+        optimizePerformance();
+        updateHeaderBackground();
+    });
+
+    // تأثيرات إضافية للمعرض (Lightbox)
+    const galleryItems = document.querySelectorAll(".gallery-item");
+    galleryItems.forEach((item) => {
+        item.addEventListener("click", () => {
+            const img = item.querySelector('img');
+            if (!img) return;
+
+            // Create lightbox
+            const lightbox = document.createElement('div');
+            lightbox.style.position = 'fixed';
+            lightbox.style.top = 0;
+            lightbox.style.left = 0;
+            lightbox.style.width = '100vw';
+            lightbox.style.height = '100vh';
+            lightbox.style.backgroundColor = 'rgba(0, 0, 0, 0.9)';
+            lightbox.style.display = 'flex';
+            lightbox.style.justifyContent = 'center';
+            lightbox.style.alignItems = 'center';
+            lightbox.style.cursor = 'zoom-out';
+            lightbox.style.zIndex = '10000';
+
+            const imgClone = document.createElement('img');
+            imgClone.src = img.src;
+            imgClone.style.maxWidth = '90vw';
+            imgClone.style.maxHeight = '90vh';
+            imgClone.style.borderRadius = '8px';
+            imgClone.style.boxShadow = '0 0 25px rgba(255,204,0,0.5)';
+            imgClone.style.objectFit = 'contain';
+
+            lightbox.appendChild(imgClone);
+            document.body.appendChild(lightbox);
+
+            lightbox.addEventListener('click', () => {
+                document.body.removeChild(lightbox);
+            });
+        });
+    });
+
+    // رسالة ترحيب في وحدة التحكم
+    console.log(`
 🎉 مرحباً بك في مركز الفارس للحلاقة! 
 ✨ تم تحميل الموقع بنجاح
 🚀 جميع الوظائف تعمل بشكل مثالي
-        `);
-      
+    `);
+    
+    
       function toggleChat() {
         const chatWrapper = document.getElementById('chat-wrapper');
         const isCurrentlyOpen = chatWrapper.classList.contains('is-open');
